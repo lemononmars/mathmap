@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Thai&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* purge start ignore */
+@layer base {
+	html {
+		@apply scroll-pt-20;
+	}
+
+	body {
+		@apply leading-normal tracking-normal text-base font-normal break-words ;
+		@apply font-thai text-base lg:text-xl;
+	}
+
+	main {
+		@apply pt-0 lg:pt-20 pb-20 lg:pb-0 max-w-4xl mx-auto;
+		@apply text-center;
+	}
+
+	a {
+		@apply link link-primary;
+		@apply no-underline hover:no-underline focus:outline-none focus:underline;
+	}
+
+	h1 {
+		@apply text-3xl text-primary my-4;
+	}
+
+	h2 {
+		@apply text-2xl font-semibold text-secondary my-2;
+	}
+
+	h3 {
+		@apply text-base font-semibold text-accent my-2;
+	}
+}
+
+/* purge end ignore */
