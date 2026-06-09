@@ -1,44 +1,23 @@
-import vercel from '@sveltejs/adapter-vercel';
-import preprocess from 'svelte-preprocess';
-
-import { mdsvex } from 'mdsvex'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import adapter from '@sveltejs/adapter-auto';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://github.com/sveltejs/svelte-preprocess
+	// Consult https://svelte.dev/docs/kit/integrations
 	// for more information about preprocessors
-	extensions: [
-		'.svelte',
-		'.svx',
-		'.md'
-	],
-	preprocess: [
-		mdsvex({ extensions: ['.svx', '.md'] }),
-		preprocess({
-			postcss: true,
-		}),
-	],
+	preprocess: vitePreprocess(),
+
+	compilerOptions: {
+		// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
+		runes: true
+	},
+
 	kit: {
-		adapter: vercel({
-		  // if true, will deploy the app using edge functions
-		  // (https://vercel.com/docs/concepts/functions/edge-functions)
-		  // rather than serverless functions
-		  edge: false,
-  
-		  // an array of dependencies that esbuild should treat
-		  // as external when bundling functions
-		  external: [],
-  
-		  // if true, will split your app into multiple functions
-		  // instead of creating a single one for the entire app
-		  split: false
-		}),
-		vite: {
-			ssr: {
-			  noExternal: ['three']
-			}
-		 }
-	 }
+		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
+		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
+		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
+		adapter: adapter()
+	}
 };
 
 export default config;
