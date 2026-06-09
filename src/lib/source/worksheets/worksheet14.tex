@@ -1,0 +1,100 @@
+\begin{enumerate}
+
+
+%1
+\item \textbf{ปริพันธ์จำกัดเขต}
+
+ถ้ากำหนดให้ $\int f(x) \, dx = F(x) + C$ แล้ว นิยามปริพันธ์จำกัดเขตคือ
+
+\[ \int_a^b f(x) \, dx = \rule{100pt}{1pt}\]
+
+จงหาปริพันธ์จำกัดเขตต่อไปนี้
+
+\begin{tasks}[after-skip = 40pt, after-item-skip = 40pt](3)
+\task $\int_0^5 1 \, dx$
+\task $\int_1^4 \sqrt{x} \, dx$
+\task $\int_0^3 x^2 \, dx$
+\task $\int_{1}^{2} \frac{1}{x^3} \, dx$
+\task $\int_{-1}^{1} (12x^4 + 12x^3) \, dx$
+\task $\int_{-1}^0 4e^x \,dx$
+\task $\int_{0}^{\pi} 4\sin x \,dx$
+\task $\int_{0}^{\pi/2} -2\cos x \,dx$
+\task $\int_{1}^{e} \frac{2}{x} \,dx$
+\end{tasks}
+
+
+%2
+\item \textbf{ปริพันธ์จำกัดเขต}
+
+จงหาปริพันธ์จำกัดเขตต่อไปนี้ โดยใช้เทคนิคการหาปริพันธ์ที่เคยเรียนมาแล้ว
+\begin{tasks}[after-skip = 80pt, after-item-skip = 80pt](2)
+\task $\int_0^{1/2} (2x+1)^4 \, dx$
+\task $\int_{-1}^0 (1-2x)^3 \, dx$
+\task $\int_{0}^{\pi} \sin (2x) \, dx$
+\task $\int_{\ln 1}^{\ln 2} e^{4x} \, dx$
+\end{tasks}
+%3
+\newpage
+\item \textbf{การใช้ปริพันธ์จำกัดเขต คำนวณพื้นที่ใต้เส้นโค้ง}
+
+จงใช้ปริพันธ์จำกัดเขตต่อไปนี้ เพื่อหาพื้นที่ใต้เส้นโค้ง พร้อมวาดรูปบริเวณโดยคร่าวด้วย
+\begin{tasks}[after-skip = 100pt, after-item-skip = 100pt](2)
+\task พื้นที่ใต้เส้นโค้ง $f(x) = -2x^2+2x$ ที่ปิดล้อมด้วยเส้นตรง $x=0$ และ $x=1$
+
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.2) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\task พื้นที่ใต้เส้นโค้ง $f(x) = 4x^3+4x$ ที่ปิดล้อมด้วยเส้นตรง $x=-1$ และ $x=2$
+
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.2) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\task จงหาพื้นที่ใต้เส้นโค้ง $f(x) = \cos x$ ที่ปิดล้อมด้วยเส้นตรง $x=0$ และ $x=\frac{\pi}{2}$
+
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.2) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\task พื้นที่ใต้เส้นโค้ง $f(x) = e^{2x}$ ที่ปิดล้อมด้วยเส้นตรง $x=0$ และ $x=\ln 2$
+
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.2) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\end{tasks}
+
+
+
+\item \textbf{ความยาวส่วนโค้ง}
+
+ความยาวส่วนโค้ง $y=f(x)$ ในช่วง $[a,b]$ มีค่าเท่ากับ
+\[ \rule{200pt}{1pt} \]
+
+จงหาความยาวส่วนโค้งของเส้นโค้งต่อไปนี้
+
+\begin{tasks}[after-skip=0pt, after-item-skip = 0pt](2)
+\task $y=4x+5$ ระหว่าง $x = 0$ ถึง $x = 2$
+
+\hfill
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.6) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\task $y=\frac{2}{3}(x-1)^{\frac{3}{2}}$ ระหว่าง $x = 1$ ถึง $x = 2$
+
+\hfill
+\begin{tikzpicture}
+\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+\draw[<->] (0,-0.6) -- (0,2) node[above] {$y$};
+\end{tikzpicture}
+
+\end{tasks}
+
+\end{enumerate}

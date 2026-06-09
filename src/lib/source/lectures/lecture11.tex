@@ -1,0 +1,400 @@
+\title{คาบเรียนที่ 11: ปริพันธ์ฟังก์ชันตรีโกณมิติยกกำลัง ฟังก์ชันไฮเปอร์โบลิก และปริพันธ์ในรูปแบบ $u^2 \pm a^2$}
+\frame{\titlepage}
+
+\begin{frame}{สารบัญ}
+\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[เอกลักษณ์ฟังก์ชันตรีโกณฯ]{การหาปริพันธ์ของฟังก์ชันตรีโกณมิติโดยใช้เอกลักษณ์}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+เราทราบว่า
+\begin{eq*}
+\int \sin x \, dx &=& \begin{slide}-\cos x + C\end{slide} \\
+\int \cos x \, dx &=& \begin{slide}\sin x + C\end{slide}
+\end{eq*}
+ในที่นี้ เราจะศึกษาการหาปริพันธ์ของฟังก์ชันตรีโกณมิติที่มีเลขชี้กำลังสูงขึ้น และปริพันธ์ของผลคูณฟังก์ชันตรีโกณมิติ
+\begin{defn}{}{}
+เรานิยามให้ $\sin^n x = (\sin x)^n$ และ $\cos^n x = (\cos x)^n$ เพื่อให้เขียนได้กระชับขึ้น
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{ทบทวนเอกลักษณ์ตรีโกณมิติ (1/3)}
+จากนิยามของฟังก์ชัน $\sin x$ และ $\cos x$ โดยใช้รูปสามเหลี่ยม ทำให้เราสามารถหาเอกลักษณ์ต่าง ๆ ได้ดังต่อไปนี้
+\begin{prop}{}{}
+\begin{eqnarray*}
+\sin^2 x + \cos ^2 x &=& 1 \\ \pa
+\sin 2x &=& 2\sin x \cos x \\ \pa
+\cos 2x &=& \cos^2 x - \sin^2 x  \\ \pa
+&=& 1 - 2\sin^2 x \pa = 2\cos^2 x - 1\\ \pa
+\sin^2 x &=& \frac{1-\cos 2x}{2} \\ \pa
+\cos^2 x &=& \frac{1+\cos 2x}{2} 
+\end{eqnarray*}
+\end{prop}
+\end{frame}
+
+\begin{frame}
+\frametitle{ทบทวนเอกลักษณ์ตรีโกณมิติ (2/3)}
+\begin{prop}{เอกลักษณ์ตรีโกณมิติ: ผลบวกมุม}{}
+\begin{eqnarray*}
+\sin (x+y) &=& \sin x \cos y + \sin y \cos x \\
+\sin (x-y) &=& \sin x \cos y - \sin y \cos x \\
+\cos (x+y) &=& \cos x \cos y - \sin x \sin y\\
+\cos (x-y) &=& \cos x \cos y + \sin x \sin y \\
+\end{eqnarray*}
+\end{prop}
+\end{frame}
+
+\begin{frame}
+\frametitle{ทบทวนเอกลักษณ์ตรีโกณมิติ (3/3)}
+\begin{prop}{เอกลักษณ์ตรีโกณมิติ: ผลคูณฟังก์ชัน}{}
+\begin{eqnarray*}
+\sin x \sin y &=& \frac{1}{2} \left( \cos (x-y) - \cos (x+y) \right) \\
+\cos x \cos y &=& \frac{1}{2} \left( \cos (x-y) + \cos (x+y) \right) \\
+\sin x \cos y &=& \frac{1}{2} \left( \sin (x+y) + \sin (x-y) \right) \\
+\cos x \sin y &=& \frac{1}{2} \left( \sin (x+y) - \sin (x-y) \right) 
+\end{eqnarray*}
+\end{prop}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงใช้เอกลักษณ์ตรีโกณมิติเพื่อหาปริพันธ์ $\int \sin^2 x\, dx$
+\end{ex} \pa
+\begin{sol}
+ใช้เอกลักษณ์ $\sin^2 x = \frac{1-\cos 2x}{2}$ \pa ฉะนั้น
+\begin{eqnarray*}
+\int \sin^2 x \, dx \pa &=& \int \frac{1-\cos 2x}{2} \, dx \\
+\pa &=& \frac{1}{2} \left( \int 1 \, dx - \int \cos 2x \, dx \right) \\
+\pa &=& \frac{1}{2}\left(x - \int \cos u \frac{du}{2} + C\right)  \mathnote{แทนค่า $u = 2x$}\\
+\pa &=& \frac{1}{2}\left(x - \frac{1}{2}\sin 2x + C\right) \pa = \frac{1}{2}x - \frac{1}{4}\sin 2x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงใช้เอกลักษณ์ตรีโกณมิติเพื่อหาปริพันธ์ $ \int \sin x \cos x \, dx$
+\end{ex} \pa
+\begin{sol}
+ใช้เอกลักษณ์ $\sin 2x = 2\sin x \cos x$ \pa เมื่อจัดรูปจะได้ $\sin x \cos x = \frac{1}{2} \sin 2x$ ฉะนั้น \pa
+\begin{eqnarray*}
+\int \sin x \cos x \, dx \pa &=& \int \frac{1}{2} \sin 2x \, dx \\
+\pa &=& \frac{1}{2} \int \sin u \frac{du}{2} \mathnote{แทนค่า $u = 2x$} \\
+\pa &=& \frac{1}{4} \int \sin u \, du \\
+\pa &=& \frac{1}{4} (-\cos u + C) \pa = -\frac{1}{4}\cos 2x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงใช้เอกลักษณ์ตรีโกณมิติเพื่อหาปริพันธ์ $\int \sin 2x \cos 3x \, dx$
+\end{ex} \pa
+\begin{sol}
+ใช้เอกลักษณ์ผลคูณ 
+\[ \sin 2x \cos 3x = \frac{1}{2}(\sin (2x+3x) + \sin(2x-3x)) = \frac{1}{2}(\sin 5x + \sin (-x)) \]
+\begin{eqnarray*}
+\int \sin 2x \cos 3x \, dx \pa &=& \int \frac{1}{2}(\sin 5x + \sin (-x)) \, dx \\
+\pa &=& \frac{1}{2} \left( \int \sin 5x \, dx + \int \sin (-x) \, dx \right) \\
+\pa &=& \frac{1}{2}\left( -\frac{1}{5} \cos 5x - \frac{1}{-1} \cos (-x) + C\right) \\
+\pa &=& -\frac{1}{10} \cos 5x + \frac{1}{5} \cos (-x) + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[$\sin^m x \cos^n x$]{การหาปริพันธ์ของฟังก์ชันตรีโกณมิติยกกำลัง ในรูปแบบ $\sin^m x \cos^n x$}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+ถ้าเลขชี้กำลังสูงขึ้น หรือเป็นจำนวนที่ไม่ใช่จำนวนเต็ม \pa เช่น
+\[ \sin^2 x \cos x, \quad \sin^4 x, \quad \sin^3 x \cos ^{-3} x, \quad \sin^{1.3} x \cos^3 x \] \pa
+ก็อาจจะหาได้หรือไม่ได้ก็ได้ ในที่นี้เราจะศึกษาเฉพาะรูปแบบที่หาได้ง่าย \pa
+\begin{remark}{ผลคูณของ $\sin x$ และ $\cos x$ ยกกำลังค่าคงตัว}
+\[ \int \sin^m x \cos^n x \, dx\]
+\end{remark} \pa
+\begin{exampleblock}{ตัวอย่าง}
+\[ \int \sin^5 x\, dx \qquad \int \sin^2 x \cos^3 x\, dx \qquad \int \frac{\sin^3 x}{\cos^5 x} \, dx \qquad \int \sqrt{\sin x} \cos x \, dx\]
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{แบบที่ 1: $m$ หรือ $n$ เป็นจำนวนเต็มบวกคี่}
+แบบที่ 1: $m$ หรือ $n$ เป็นจำนวนเต็มบวกคี่ \pa
+\begin{slide}
+\begin{itemize}
+\item ถ้าเลขชี้กำลังของ $\sin x$ (นั่นคือ $m$) เป็นจำนวนคี่ \pa เราจะให้ $u = \cos x$ และแปลง $\sin x$ เป็น $\cos x$ ด้วย $\sin^2 x = 1-\cos^2 x = 1-u^2$ \pa
+\item ถ้าเลขชี้กำลังของ $\cos x$ (นั่นคือ $n$) เป็นจำนวนคี่ \pa เราจะให้ $u = \sin x$ และแปลง $\cos x$ เป็น $\sin x$ ด้วย $\cos^2 x = 1-\sin^2 x = 1-u^2$
+\end{itemize}
+เสร็จแล้ว จะได้ปริพันธ์ในตัวแปร $u$ ตัวแปรเดียว ทำให้สามารถหาปริพันธ์ได้
+\end{slide}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่าของ $ \int \sin^3 x \cos^2 x \, dx$ \pa
+\end{ex}
+
+\begin{sol}
+เนื่องจาก $\sin x$ มีเลขชี้กำลังเป็นเลขคี่ ให้ $u = \cos x$ จะได้ \pa $du = -\sin x\, dx$  \pa
+
+และแปลง $\sin^2 x = 1- \cos^2 x$ จะได้ \pa
+\begin{eqnarray*}
+\int \sin^3 x \cos^2 x \, dx \pa &=& \int\sin^2 x \cos^2 x (\sin x\, dx) \\ 
+\pa &=& -\int (1-u^2) u^2\, du \\
+\pa &=& -\int u^2 - u^4 \, du \\
+\pa &=& -\frac{1}{3} u^3 + \frac{1}{5} u^5 + C = -\frac{1}{3} \cos^3 x + \frac{1}{5} \cos^5 x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่าของ $ \int \sin^{-4} x \cos^3 x \, dx$ \pa
+\end{ex}
+
+\begin{sol}
+เนื่องจาก $\cos x$ มีเลขชี้กำลังเป็นเลขคี่ ให้ $u = \sin x$ จะได้ \pa $du = \cos x\, dx$ \pa
+
+และแปลง $\cos^2 x = 1- \sin^2 x$ จะได้ \pa
+\begin{eqnarray*}
+\int \sin^{-4} x \cos^3 x \, dx \pa &=& \int\sin^{-4} x \cos^2 x (\cos x\, dx) \\
+\pa &=& \int u^{-4} (1-u^2) \, du \\
+\pa &=& \int u^{-4} - u^{-2} \, du \\
+\pa &=& -\frac{1}{3} u^{-3} + u^{-1} + C = -\frac{1}{3} \sin^{-3} x - \sin^{-1} x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{แบบที่ 2: เลขชี้กำลังทั้งคู่เป็นคู่}
+
+ใช้เอกลักษณ์ต่อไปนี้ เพื่อทำให้เลขชี้กำลังลดลง
+\begin{slide}
+\begin{eqnarray*}
+\sin^2 x \pa &=& \frac{1-\cos 2x}{2} \\ \pa
+\pa &=& \frac{1}{2} - \frac{\cos 2x}{2} \\ 
+&\quad& \\ \pa
+\cos^2 x \pa &=& \frac{1+\cos 2x}{2} \\ \pa
+\pa &=& \frac{1}{2} + \frac{\cos 2x}{2} \pa
+\end{eqnarray*}
+\end{slide}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่าของ $ \int \sin^2 x \cos^2 x \, dx$ \pa
+\end{ex}
+
+\begin{sol}
+เนื่องจากเลขชี้กำลังของทั้ง $\sin x$ และ $\cos x$ เป็นเลขคู่ ให้ใช้เอกลักษณ์ในการแปลงดังนี้ \pa
+
+\begin{eqnarray*}
+\int \sin^2 x \cos^2 x \, dx \pa &=& \int\ \left( \frac{1-\cos 2x}{2} \right) \left( \frac{1+\cos 2x}{2} \right) \, dx \\
+\pa &=& \int \frac{1}{4} \left(1 - \cos^2 2x \right) \, dx \\
+\pa &=& \frac{1}{4} \int 1 \, dx - \frac{1}{4} \int \cos^2 2x \, dx 
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{sol} (ต่อ)
+คำนวณหาปริพันธ์ส่วนหลัง $\int \cos^2 2x \, dx $ ต่อ จะได้
+\begin{eqnarray*}
+\int \cos^2 2x \, dx \pa &=& \int \left( \frac{1+\cos 4x}{2} \right)\, dx \\
+\pa &=& \frac{1}{2} \int 1 \, dx + \frac{1}{2} \int \cos 4x \, dx \\
+\pa &=& \frac{x}{2} + \frac{1}{8} \sin 4x + C
+\end{eqnarray*}
+ฉะนั้น
+\begin{eqnarray*}
+\int \sin^2 x \cos^2 x \, dx \pa &=&\frac{1}{4} \int 1 \, dx - \frac{1}{4} \int \cos^2 2x \, dx  \\
+\pa &=& \frac{1}{4} x - \frac{1}{4} \left( \frac{x}{2} - \frac{1}{8} \sin 4x + C \right) \\
+\pa &=& \frac{x}{8} - \frac{1}{32} \sin 4x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่าของ $ \int \sin^2 3x \, dx$ \pa
+\end{ex}
+\begin{sol}
+เนื่องจากเลขชี้กำลังของทั้ง $\sin x$ และ $\cos x$ เป็นเลขคู่ \pa (ถ้าไม่เห็นพจน์ $\cos x$ แปลว่า $1 = \cos^0 x$ ซึ่ง $0$ เป็นเลขคู่) \pa ให้ใช้เอกลักษณ์ในการแปลงดังนี้
+
+\begin{eqnarray*}
+\int \sin^2 3x \, dx \pa &=& \int \left( \frac{1-\cos 6x}{2} \right) \, dx \\
+\pa &=& \frac{1}{2} \int 1 \, dx - \frac{1}{2} \int \cos 6x \, dx \\
+\pa &=& \frac{x}{2} - \frac{1}{12} \sin 6x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+%%%%%%%%%%%%%%
+\section[$\tan^m x \sec^n x$]{การหาปริพันธ์ของฟังก์ชันตรีโกณมิติยกกำลัง ในรูปแบบ $\tan^m x \sec^n x$}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+ในทำนองเดียวกัน ถ้าฟังก์ชันที่ต้องการหาปริพันธ์อยู่ในรูปแบบ $\tan^m x \sec^n x$ เช่น
+\[ \tan^2 x \sec x, \quad \tan^4 x, \quad \tan^3 x \sec ^{-3} x, \quad \sec^{1.3} x \tan^3 x \] \pa
+เราสามารถใช้หลักการเดียวกันกับการหาปริพันธ์ของฟังก์ชันในรูปแบบ $\sin^m x \cos^n x$ ได้เช่นกัน โดยใช้เอกลักษณ์
+\[ \tan^2 x = \sec^2 x - 1, \quad \sec^2 x = \tan^2 x + 1 \]
+และอนุพันธ์ 
+\[ \dx \tan x = \sec^2 x, \quad \dx \sec x = \sec x \tan x\] 
+ในการแปลง $\tan x$ เป็น $\sec x$ หรือกลับกัน
+\end{frame}
+
+\begin{frame}{หลักการแทนค่าเพื่อหาปริพันธ์ในรูปแบบ $\tan^m x \sec^n x$}
+\begin{itemize}
+\item กรณีที่ 1 - ถ้า $m$ เป็นจำนวนเต็มบวกและ $n=0$ จะเปลี่ยนรูป $\tan^m x = \tan^{m-2}x \tan^2 x = \tan^{m-2} x (\sec^2 x -1)$ 
+\item กรณีที่ 2 - ถ้า $n$ เป็นจำนวนเต็มคู่บวก จะเปลี่ยนรูป $\sec^n x = \sec^{n-2} x \sec^2 x = (\tan^2 x + 1)^{\frac{n-2}{2}} \sec^2 x$
+\item กรณีที่ 3 - ถ้า $m$ เป็นจำนวนเต็มคี่บวก จะเปลี่ยนรูป $\tan^m x \sec^n x = (\tan^{m-1} x \sec^{n-1} x) (\tan x \sec x)$
+\item กรณีที่ 4 - ถ้า $m=0$ หรือเป็นจำนวนเต็มคู่บวก และ $n$ เป็นจำนวนเต็มคี่บวก ให้ใช้ปริพันธ์แยกส่วน
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่าของ $ \int \tan^5 x \sec^2 x \, dx$
+\end{ex}
+\begin{sol}
+เนื่องจาก $\tan x$ มีเลขชี้กำลังเป็นเลขคี่ จึงอยู่ในกรณีที่ 3 ให้ $u = \sec x$ จะได้ $du = \sec x \tan x\, dx$  และแปลง $\tan^2 x = \sec^2 x - 1 = u^2-1$ จะได้ \pa
+\begin{eqnarray*}
+\int \tan^5 x \sec^2 x \, dx \pa &=& \int\tan^5 x \sec^2 x \left( \frac{du}{\sec x \tan x} \right) \\ 
+&=& \int \tan^4 x \sec x \, du = \int (u^2-1)^2 u \, du \\
+&=& \int (u^4 - 2u^2 + 1) u \, du = \int u^5 - 2u^3 + u \, du  \\
+&=& \tfrac{1}{6} u^6 - \tfrac{1}{2} u^4 + \tfrac{1}{2} u^2 + C \\
+&=& \tfrac{1}{6} \sec^6 x - \tfrac{1}{2} \sec^4 x + \tfrac{1}{2} \sec^2 x + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[$\cot^m x \csc^n x$]{การหาปริพันธ์ของฟังก์ชันตรีโกณมิติยกกำลัง ในรูปแบบ $\cot^m x \csc^n x$}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+ในทำนองเดียวกัน ถ้าฟังก์ชันที่ต้องการหาปริพันธ์อยู่ในรูปแบบ $\cot^m x \csc^n x$ เช่น
+\[ \cot^4 x \sec^3 x, \quad \cot^8 x, \quad \cot^3 x \csc ^{-5} x, \quad \cot^{2.5} x \csc^3 x \] \pa
+เราสามารถใช้หลักการเดียวกันกับการหาปริพันธ์ของฟังก์ชันในรูปแบบ $\tan^m x \sec^n x$ ได้เช่นกัน โดยใช้เอกลักษณ์
+\[ \cot^2 x = \csc^2 x - 1, \quad \csc^2 x = \cot^2 x + 1 \]
+และอนุพันธ์ 
+\[ \dx \cot x = -\csc^2 x, \quad \dx \csc x = -\csc x \cot x\] 
+ในการแปลง $\cot x$ เป็น $\csc x$ หรือกลับกัน
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[ไฮเพอร์โบลิก]{สูตรปริพันธ์ของฟังก์ชันไฮเพอร์โบลิก}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\begin{thm}{สูตรปริพันธ์ของฟังก์ชันไฮเพอร์โบลิก}{}
+\begin{eqnarray*}
+\int \sinh u \, du &=& \cosh u + C \\ \pa
+\int \cosh u \, du &=& \sinh u + C \\ \pa
+\int \tanh u \, du &=& - \ln | \cosh u| + C \\ \pa 
+\int \coth u \, du &=& \ln | \sinh u | + C\\ \pa 
+\int \sech u \, du &=& \tan^{-1} |\sinh x| + C \\ \pa 
+\int \csch u \, du &=& \ln \left| \tanh \left(\frac{x}{2}\right) \right| + C
+\end{eqnarray*}
+\end{thm}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหา  $\int \sinh (3x) \, dx$
+\end{ex}
+\begin{sol}
+แทนค่า $u=3x$ จะได้ $du = 3 dx$ ฉะนั้น
+\begin{eq*}
+\int \sinh(3x) \, dx &=& \int \sinh(u) \left(\frac{du}{3}\right) \\
+&=& \frac{1}{3} \int \sinh u \, du \\
+&=& \frac{1}{3} (\cosh u + C) \\
+&=& \frac{1}{3} \cosh(3x) + C
+\end{eq*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[$u^2 \pm a^2$ และ $a^2 \pm u^2$]{สูตรปริพันธ์ของฟังก์ชันในรูป $u^2 \pm a^2$ และ $a^2 \pm u^2$}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+\begin{frame}
+\begin{thm}{สูตรปริพันธ์ของฟังก์ชันในรูป $u^2 \pm a^2$ และ $a^2 \pm u^2$}{}
+ให้ $a$ เป็นค่าคงที่ และ $u$ เป็นฟังก์ชันที่หาปริพันธ์ได้ \pa
+\begin{eqnarray*}
+\int \frac{1}{a^2+u^2} \, du &=& \frac{1}{a} \arctan \frac{u}{a} + C \\ \pa
+\int \frac{1}{a^2 - u^2} \, du &=& \frac{1}{2a} \ln \left| \frac{a+u}{a-u} \right| + C \qquad \text{เมื่อ } u^2 < a^2\\ \pa
+\int \frac{1}{u^2 - a^2} \, du &=& \frac{1}{2a} \ln \left| \frac{u-a}{u+a} \right| + C \qquad \text{เมื่อ } u^2 > a^2\\ \pa 
+\int \frac{1}{\sqrt{a^2-u^2}} \, du &=& \arcsin \frac{u}{a} + C \\ \pa
+\int \frac{1}{\sqrt{u^2 \pm a^2}} \, du &=& \ln | u + \sqrt{u^2 \pm a^2} | + C
+\end{eqnarray*}
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ $\int \frac{dx}{4 + 9x^2}$
+\end{ex} \pa
+\begin{sol}
+$4 + 9x^2 = 2^2 + (3x)^2$\pa ฉะนั้นเราให้ $a = 2$ และ $u=3x$ 
+
+โดยเราต้องเปลี่ยน $dx$ เป็น $du$ ด้วย จาก $\frac{du}{dx} = 3$ ได้ $dx = \frac{du}{3}$ และแทนค่าในสูตรที่ 1 \pa
+\begin{eqnarray*}
+\int \frac{dx}{4+9x^2} \pa = \int \frac{1}{a^2 + u^2} \frac{du}{3} \pa &=& \frac{1}{3} \int \frac{1}{a^2 + u^2} \, du \\ \pa
+&=& \frac{1}{3} \left( \frac{1}{a} \arctan \frac{u}{a} + C \right)\\ \pa
+&=& \frac{1}{3} \left( \frac{1}{2} \arctan \frac{3x}{2} + C \right) \\ \pa
+&=& \frac{1}{6} \arctan \frac{3x}{2} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ $\int \frac{dx}{\sqrt{25 - x^2}}$
+\end{ex} \pa
+\begin{sol}
+$25 - x^2 = 5^2 - x^2$ \pa ฉะนั้นเราให้ $a = 5$ และ $u=x$ 
+
+โดยเราต้องเปลี่ยน $dx$ เป็น $du$ ด้วย จาก $\frac{du}{dx} = 1$ ได้ $dx =du$ และแทนค่าในสูตรที่ 4 \pa
+\begin{eqnarray*}
+\int \frac{dx}{\sqrt{25 - x^2}} \pa &=& \int \frac{1}{\sqrt{a^2 - u^2}} \, du \\ \pa
+&=& \arcsin \frac{u}{a} + C \\ \pa
+&=& \arcsin \frac{x}{5} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ $\int \frac{1}{\sqrt{16-9x^2}} \, dx$
+\end{ex}
+\begin{sol}
+เมื่อเทียบกับสูตร จะได้ $a^2 = 16$ และ $u^2 = 9x^2$ นั่นคือ $a = 4$ และ $u = 3x$ และ
+\[ \frac{du}{dx} = \dx 3x = 3 \rightarrow dx = \frac{1}{3} du\]
+ฉะนั้น
+\begin{eqnarray*}
+\int \frac{1}{\sqrt{16-9x^2}} \, dx = \int \frac{1}{\sqrt{a^2-u^2}} \left(\frac{du}{3}\right) &=& \frac{1}{3} \int \frac{1}{\sqrt{a^2-u^2}} \, du \\
+&=& \frac{1}{3} \left( \arcsin \frac{u}{a} + C \right)\\
+&=& \frac{1}{3} \arcsin \left(\frac{3x}{4}\right) + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}

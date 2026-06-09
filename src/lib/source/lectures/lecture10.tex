@@ -1,0 +1,454 @@
+\title{คาบเรียนที่ 10: ปริพันธ์ของฟังก์ชันประกอบ และสูตรปริพันธ์ของฟังก์ชันอดิศัย}
+\frame{\titlepage}
+
+\begin{frame}{สารบัญ}
+\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section{ปริพันธ์ของฟังก์ชันประกอบ}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{ปริพันธ์สำหรับฟังก์ชันประกอบ}
+สังเกตว่า เรามีสูตรปริพันธ์สำหรับผลคูณด้วยค่าคงตัว ผลบวก และผลลบของฟังก์ชัน เรายังมีสมบัติอนุพันธ์ต่อไปนี้
+\begin{thm}{}{}
+\[\dx (f \circ g)(x) = \frac{d}{dg} f(g(x)) \cdot \dx g(x)\]
+\end{thm}
+เรามีสมบัติของปริพันธ์ที่คล้ายกับสมบัตินี้ ในชื่อว่า ``การแทนค่า $u$''
+\end{frame}
+
+\begin{frame}
+\frametitle{ทบทวนค่าเชิงอนุพันธ์}
+ในบทประยุกต์อนุพันธ์ เรื่องการประมาณค่า เราได้นิยามสิ่งนี้ไว้
+\begin{thm}{}{}
+กำหนดให้ $u(x)$ เป็นฟังก์ชันที่มีตัวแปร $x$ \pa ถ้า 
+\[\frac{du}{dx} = u'(x)\] \pa 
+แล้วเราสามารถเขียนในรูป \textbf{ค่าเชิงอนุพันธ์}
+\[ du = u'(x) \, dx\]
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+กำหนดฟังก์ชัน $u(x)$ ต่อไปนี้มาให้ จงหา $du$
+\[a) u(x) = x^2 \qquad b) u(x) = \frac{3}{x} \qquad c) u(x) = \ln (3x+1) \qquad d) u(x) = x \sin x\]
+\end{ex}
+\begin{sol}
+\begin{itemize}
+\item ให้ $u(x) = x^2$ \pa แล้วจะได้ $ \frac{du}{dx} = 2x$ \pa ฉะนั้นจะได้ $du = 2x \, dx$ \pa
+\item ให้ $u(x) = 3x^{-1}$ \pa แล้วจะได้ $  \frac{du}{dx} = -3x^{-2}$ \pa ฉะนั้นจะได้ $du = -3x^{-2} \, dx$ \pa
+\item ให้ $u(x) = \ln (3x+1) $ \pa แล้วจะได้ $  \frac{du}{dx} = \frac{3}{3x+1}$ \pa ฉะนั้นจะได้ $du = \frac{3}{3x+1} \, dx$ \pa
+\item ให้ $u(x) = x\sin x$ \pa แล้วจะได้ $ \frac{du}{dx} = x \cos x + \sin x$ \pa ฉะนั้นจะได้ $du = (x \cos x + \sin x) \, dx$
+\end{itemize}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{ที่มาของเทคนิคการแทนค่า $u$}
+พิจารณาการหาอนุพันธ์ $\dx (3x+1)^4$ โดยใช้กฎลูกโซ่ต่อไปนี้
+\begin{slide}
+\begin{eqnarray*}
+\dx (3x+1)^4 \pa \pa &=& \dx u^4 \\
+\pa &=& 4u^3 \dx u \\
+\pa &=& 4(3x+1)^3 \cdot 3 \\
+\pa &=& 12 (3x+1)^3 \pa
+\end{eqnarray*}
+เมื่อใช้นิยามของปริพันธ์แล้ว จะได้ว่า
+\[ (3x+1)^4 + C = \int 12 (3x+1)^3 \, dx\]
+\end{slide}
+\end{frame}
+
+\begin{frame}[t]
+ในทางกลับกัน ถ้าเราต้องการหาปริพันธ์
+\[ \int 12 (3x+1)^3 \, dx\]
+\begin{slide}
+เราสามารถแทนค่า $\red{u} = 3x+1$ ได้เช่นกัน จะได้
+\[ \int 12(3x+1)^3 \, dx = \int 12\red{u}^3 \, dx\]
+แต่เรายังหาปริพันธ์ต่อไม่ได้ทันที เนื่องจากเรามีตัวแปร 2 ตัวคือ $\red{u}$ และ $x$ เราจึงต้องเปลี่ยนตัวแปรทั้งหมดให้เป็น $\red{u}$
+\end{slide}
+\end{frame}
+
+\begin{frame}[t]
+\begin{slide}
+เนื่องจากเราทราบว่า $d\red{u} = 3\,dx$ นั่นคือ $dx = \frac{1}{3} \, d\red{u}$ ฉะนั้น
+\begin{eq*}
+\int 12\red{u}^3 \, dx &=& \int 12\red{u}^3 \frac{1}{3} \, d\red{u} \\
+&=& \int 4\red{u}^3 \, d\red{u}
+\end{eq*}
+ซึ่งเป็นปริพันธ์ในตัวแปร $\red{u}$ เหมือนกันทั้งหมด ฉะนั้นเราจึงสามารถหาปริพันธ์ได้เป็น
+\[ \int 4\red{u}^3 \, d\red{u} = \red{u}^4 + C\]
+และสุดท้าย เราแทนค่า $\red{u}=3x+1$ กลับเข้าไปในสมการ เพื่อให้ได้ตัวแปร $x$ กลับมา จะได้คำตอบเป็น
+\[ \int 12 (3x+1)^3 \, dx = (3x+1)^4 + C\]
+\end{slide}
+\end{frame}
+
+\begin{frame}
+\frametitle{เทคนิคการแทนค่า $u$}
+เราสรุปกระบวนการทั้งหมดเป็นทฤษฏีบทได้ดังนี้
+\begin{thm}{}{}
+กำหนดฟังก์ชันประกอบ $(f\circ u)(x) = f(u(x))$ แล้ว
+\begin{eq}
+\int f\,(u(x)) u' \, dx &=& \int f(u) \, du \nonumber \\
+\int f\,(u(x)) \, dx &=& \int f(u) \, \frac{du}{u'} 
+\end{eq}
+\end{thm}
+โดยในพจน์หลัง เราเขียนย่อ $u = u(x)$ โดยมอง $u$ เป็นตัวแปรใหม่
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{การแยกเป็นฟังก์ชันประกอบ}
+ในทางปฏิบัติ เราต้องหาให้ได้ก่อนว่าควรกำหนด $u(x)$ เป็นฟังก์ชันใด ซึ่งขึ้นอยู่กับประสบการณ์ เมื่อหาได้เสร็จแล้วถึงจะทด $u(x)$ และ $u'(x)$ ไว้ด้านข้าง ก่อนที่จะนำมาแทนในสมการ
+\begin{ex}
+จงหาค่า $u$ ที่เหมาะสมสำหรับปริพันธ์  $ \int (3x^2+x)^4 \, dx$
+\end{ex}
+\begin{sol}
+จาก $ \int (3x^2+x)^4 \, dx$ \pa ให้แทน $u = 3x^2 + x$ จะได้เป็น $\int u^4 \, dx$
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาค่า $u$ ที่เหมาะสมสำหรับปริพันธ์ต่อไปนี้
+\[a) \int \frac{1}{x^4+x^2+1} \, dx \qquad b) \int xe^{7x^2 + x + 1} \, dx \qquad c)  \int \ln (e^x + \cos x) \, dx\]
+\end{ex}
+\begin{sol}
+\begin{itemize}
+\item $ \int \frac{1}{x^4+x^2+1} \, dx$ \pa  ให้แทน $u = x^4 + x^2 + 1$ จะได้เป็น $\int \frac{1}{u} \, dx$
+\item $ \int xe^{7x^2 + x + 1} \, dx$ \pa ให้แทน $u = 7x^2 + x + 1$ จะได้เป็น $\int xe^u \,dx$ (สังเกตว่า พจน์ $x$ ที่คูณด้านหน้า เรายังไม่สามารถจัดรูปได้)
+\item $ \int \ln (e^x + \cos x) \, dx$ \pa ให้แทน $u = e^x + \cos x$ จะได้เป็น $\int \ln (u) \, dx$
+\end{itemize}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ $\int (2x+1 )^5\,dx$ โดยการแทนค่า $u$
+\end{ex}
+\begin{sol}
+แทนค่า $u = 2x+1$ \pa จะได้ $\frac{du}{dx} = 2$ \pa นั่นคือ $du = 2\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int (2x+1)^5 \, dx \pa = \int u^5 \left( \frac{du}{2} \right) \pa &=& \frac{1}{2} \int u^5 \, du \\
+\pa &=& \frac{1}{2} \left( \frac{1}{6} u^6 + C \right) \\
+\pa &=& \frac{1}{12}u^6 + C = \frac{1}{12}(2x+1)^6 + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[เทคนิคแทนค่า $u$]{เทคนิคการหาปริพันธ์: การแทนค่า $u$}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{วิธีการหาปริพันธ์โดยใช้เทคนิคการแทนค่า $u$}
+เราสามารถสรุปการหาปริพันธ์ $\int (2x+1 )^5\,dx$  ออกมาเป็นขั้นตอนได้ดังนี้
+\begin{remark}{ขั้นตอนการใช้เทคนิคการแทนค่า $u$}
+\begin{tasks}[style = enumerate]
+\task หาพจน์ที่ดูซับซ้อนก่อน และลองแทนค่าพจน์นั้นเป็นฟังก์ชัน $u$ \pa
+\task หาอนุพันธ์ $du = u' dx$ จะได้ว่า $dx = \frac{du}{u'}$ \pa
+\task แทนค่า $dx$ และจัดรูปพจน์อื่นในปริพันธ์ให้เป็น $u$ เท่าที่ทำได้ 
+\begin{itemize}
+\item ถ้าผลลัพธ์เป็นปริพันธ์ที่เหลือแต่ตัวแปร $u$ ให้ทำการหาปริพันธ์ได้ 
+\item ถ้ายังติดทั้งตัวแปร $u$ และ $x$ ให้ลองแทนค่า $u$ ใหม่ หรือให้ลองวิธีอื่น
+\end{itemize}
+\end{tasks}
+\end{remark}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ $\int (5-4x)^3\,dx$ โดยการแทนค่า $u$
+\end{ex}
+\begin{sol}
+แทนค่า $u = 5-4x$ \pa จะได้ $\frac{du}{dx} = -4$ \pa นั่นคือ $du = -4\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int (5-4x)^3 \, dx \pa = \int u^3 \left( \frac{du}{-4} \right) \pa &=& -\frac{1}{4} \int u^3 \, du \\
+\pa &=& -\frac{1}{4} \left( \frac{1}{4} u^4 + C \right) \\
+\pa &=& -\frac{1}{16}u^4 + C = \frac{-1}{16}(5-4x)^4 + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ต่อไปนี้ โดยการแทนค่า $u$
+\[\int  \frac{x}{(x^2+1)^2}\,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = x^2+1$ จะได้ \pa $\frac{du}{dx} = 2x$ \pa นั่นคือ $du = 2x\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$  \pa
+\begin{eqnarray*}
+\int \frac{x}{(x^2+1)^2} \, dx \pa = \int \frac{x}{u^2} \left(\frac{du}{2x} \right) \pa &=& \frac{1}{2} \int \frac{1}{u^2} \, du = \frac{1}{2} \int u^{-2} \, du \\
+\pa &=& \frac{1}{2} \left( - u^{-1} + C \right) \\
+\pa &=& \frac{1}{2}u^{-1} + C = \frac{1}{2}(x^2+1)^{-1} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ต่อไปนี้ โดยการแทนค่า $u$
+\[\int  x^2 \sqrt{x^3-5} \, dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = x^3-5$ จะได้ \pa $\frac{du}{dx} = 3x^2$ \pa นั่นคือ $du = 3x^2\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$  \pa
+\begin{eqnarray*}
+\int x^2 \sqrt{x^3-5}\, dx \pa = \int x^2 \sqrt{u} \left(\frac{du}{3x^2} \right) \pa &=& \frac{1}{3} \int \sqrt{u}\, du = \frac{1}{3} \int u^{\frac{1}{2}}\, du \\
+\pa &=& \frac{1}{3} \left( \frac{2}{3} u^{\frac{3}{2}} + C \right)  \\
+\pa &=& \frac{2}{9} u^{\frac{3}{2}} + C = \frac{2}{9}(x^3-5)^{\frac{3}{2}} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ต่อไปนี้ โดยการแทนค่า $u$
+\[\int  x^2 \sqrt{x-1} \, dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = x-1$ จะได้ \pa $\frac{du}{dx} = 1$ \pa นั่นคือ $du = dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ จะได้ $\int x^2 \sqrt{x-1}\, dx \pa = \int x^2 \sqrt{u} \, du$ แต่สังเกตว่าเรายังคำนวณต่อไม่ได้ทันทีเนื่องจากมีพจน์ $x^2$ หลงเหลืออยู่
+
+อย่างไรก็ตาม เราสามารถเปลี่ยนตัวแปร $x$ ให้เป็นตัวแปร $u$ ได้ดังนี้
+\[ u = x-1 \qquad \rightarrow \qquad x = u+1 \]
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\begin{sol} (ต่อ)
+ฉะนั้น
+\begin{eqnarray*}
+\int x^2 \sqrt{x-1}\, dx \pa &=& \int (u+1)^2 \sqrt{u} \, du \\
+&=& \int (u^2+2u+1) u^{\frac{1}{2}} \, du \\
+&=& \int u^{\frac{5}{2}} + 2u^{\frac{3}{2}} + u^{\frac{1}{2}} \, du \\
+&=& \frac{1}{7/2} u^{\frac{7}{2}} + 2 \left(\frac{1}{5/2} u^{\frac{5}{2}}\right) + \frac{1}{3/2} u^{\frac{3}{2}} + C \\
+&=& \frac{2}{7} u^{\frac{7}{2}} + \frac{4}{5} u^{\frac{5}{2}} + \frac{2}{3} u^{\frac{3}{2}} + C \\
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}{การใช้สูตรร่วมกับการหาปริพันธ์โดยการแทนค่า}
+เราได้ศึกษาสูตรปริพันธ์ต่าง ๆ เช่น
+\begin{remark}{}
+\begin{eqnarray*}
+\int x^n \, dx &=& \frac{1}{n+1}x^{n+1} + C \\
+\end{eqnarray*}
+\end{remark}
+เมื่อใช้ร่วมกับการหาปริพันธ์ด้วยการแทนค่า เราจะเปลี่ยนไปใช้ตัวแปร $u$ แทน ซึ่งเราจะเขียนสูตรใหม่ และมีวิธีการใช้งานดังต่อไปนี้
+\begin{remark}{}
+\begin{eqnarray*}
+\int u^n \, du &=& \frac{1}{n+1}u^{n+1} + C \\
+\end{eqnarray*}
+\end{remark}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[เลขชี้กำลังและลอการิทึม]{สูตรปริพันธ์ของฟังก์ชันเลขชี้กำลัง และฟังก์ชันที่ให้ผลลัพธ์เป็นฟังก์ชันลอการิทึม}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+
+\begin{frame}
+\begin{thm}{ปริพันธ์ของฟังก์ชันเลขชี้กำลัง และฟังก์ชันที่ให้ผลลัพธ์เป็นฟังก์ชันลอการิทึม}{}
+\begin{eqnarray*}
+\int e^u \, du &=& e^u + C \\ \pa
+%\int a^u \, du &=& (\ln a)a^u + C \\ \pa
+\int \frac{1}{u} \, du &=& \ln |u| + C
+\end{eqnarray*}
+\end{thm}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int e^{2x} \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 2x$ จะได้ $\frac{du}{dx} = 2$ นั่นคือ $du = 2\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int e^{2x} \, dx \pa = \int e^u \left( \frac{1}{2} \, du \right) \pa &=& \frac{1}{2} \int e^u \, du \\
+\pa &=& \frac{1}{2} (e^u + C) \\
+\pa &=& \frac{1}{2} e^u + C = \frac{1}{2} e^{2x} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int 3e^{4x+5} \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 4x+5$ จะได้ $\frac{du}{dx} = 4$ นั่นคือ $du = 4\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int 3e^{4x+5} \, dx \pa = 3\int e^u \left( \frac{1}{4} \, du \right) \pa &=& \frac{3}{4} \int e^u \, du \\
+\pa &=& \frac{3}{4} (e^u + C) \\
+\pa &=& \frac{3}{4} e^u + C = \frac{3}{4} e^{4x+5} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int \frac{1}{2x+1} \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 2x+1$\pa จะได้ $\frac{du}{dx} = 2$\pa นั่นคือ $du = 2\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int \frac{1}{2x+1} \, dx \pa = \int \frac{1}{u} \left( \frac{1}{2} \, du \right) \pa &=& \frac{1}{2} \int \frac{1}{u} \, du \\
+\pa &=& \frac{1}{2} (\ln |u| + C) \\
+\pa &=& \frac{1}{2} \ln |u| + C = \frac{1}{2} \ln|2x+1| + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int \frac{2}{3-4x} \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 3-4x$\pa จะได้ $\frac{du}{dx} = -4$\pa นั่นคือ $du = -4\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int \frac{2}{3-4x} \, dx \pa = 2\int \frac{1}{u} \left( \frac{1}{-4} \, du \right) \pa &=& -\frac{2}{4} \int \frac{1}{u} \, du \\
+\pa &=& -\frac{1}{2} (\ln |u| + C) \\
+\pa &=& -\frac{1}{2} \ln |u| + C = -\frac{1}{2} \ln|3-4x| + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int x^2e^{x^3} \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = x^3$\pa จะได้ $\frac{du}{dx} = 3x^2$\pa นั่นคือ $du = 3x^2\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int x^2e^{x^3} \, dx \pa = \int x^2 e^u \left( \frac{du}{3x^2} \right) \pa &=& \frac{1}{3} \int e^u \, du \\
+\pa &=& \frac{1}{3} \left( e^u + C \right) \\
+\pa &=& \frac{1}{3} e^u + C = \frac{1}{3}e^{x^3} + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+%%%%%%%%%%%%%%
+\section[ตรีโกณมิติ]{สูตรปริพันธ์ของฟังก์ชันตรีโกณมิติ}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\begin{thm}{สูตรปริพันธ์ฟังก์ชันตรีโกณมิติ}{}
+\begin{eqnarray*}
+\int \sin u \, du &=& - \cos u + C \\ \pa
+\int \cos u \, du &=& \sin u + C \\ \pa
+\int \tan u \, du &=& - \ln | \cos u| + C = \ln | \sec u| + C\\ \pa 
+\int \cot u \, du &=& \ln | \sin u | + C\\ \pa 
+\int \sec u \, du &=& \ln | \sec u + \tan u | + C \\ \pa 
+\int \csc u \, du &=& \ln | \csc u - \cot u| + C
+\end{eqnarray*}
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int \sin(3x) \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 3x$\pa จะได้ $\frac{du}{dx} = 3$\pa นั่นคือ $du = 3\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int \sin(3x) \, dx \pa = \int \sin(u) \left( \frac{1}{3} \, du \right) \pa &=& \frac{1}{3} \int \sin(u) \, du \\
+\pa &=& \frac{1}{3} \left( -\cos (u) + C \right) \\
+\pa &=& -\frac{1}{3} \cos(u) + C = -\frac{1}{3} \cos(3x) + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int \cos(4x-3) \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = 4x-3$\pa จะได้ $\frac{du}{dx} = 4$\pa นั่นคือ $du = 4\, dx$ \pa
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int \cos(4x-3) \, dx \pa &=& \int \cos(u) \left( \frac{1}{4} \, du \right) \pa = \frac{1}{4} \int \cos(u) \, du \\
+\pa &=& \frac{1}{4} \left( \sin (u) + C \right) \\
+\pa &=& \frac{1}{4} \sin(u) + C = \frac{1}{4} \sin(4x-3) + C
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์
+\[\int  \sin x (\cos x)^8 \,dx\]
+\end{ex}
+\begin{sol}
+แทนค่า $u = \cos x$ \pa จะได้ $\frac{du}{dx} = - \sin x$ \pa นั่นคือ $du = - \sin x\, dx$
+
+เมื่อเปลี่ยนพจน์ในปริพันธ์ให้กลายเป็น $u$ \pa
+\begin{eqnarray*}
+\int \sin x (\cos x)^8 \, dx \pa = \int (\sin x) (u^8) \left( \frac{du}{- \sin x} \right) \pa &=& - \int u^8 \, du \\
+\pa &=& \frac{1}{9}u^9 + C\\
+\pa &=& \frac{1}{9}(\cos x)^9 + C 
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหาปริพันธ์ 
+\[\int x\tan (x^2) \, dx\]
+\end{ex} \pa
+\begin{sol}
+ใช้การแทนค่า $u$ โดยกำหนดให้ $u(x) = x^2$ จะได้ $du = 2x \, dx$ ฉะนั้น
+\begin{eq*}
+\int x \tan (x^2) \, dx &=& \int x \tan u \frac{du}{2x} \\
+&=& \frac{1}{2} \int \tan u \, du \\
+&=& \frac{1}{2} (\ln | \sec u| + C) \\
+&=& \frac{1}{2} \ln |\sec (x^2)| + C
+\end{eq*}
+\end{sol}
+\end{frame}
+

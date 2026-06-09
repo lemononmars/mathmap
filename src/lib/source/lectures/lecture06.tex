@@ -1,0 +1,833 @@
+\title{คาบเรียนที่ 6: อนุพันธ์ฟังก์ชันประกอบ และสูตรอนุพันธ์อื่น}
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{สารบัญ}
+\tableofcontents
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ทบทวนอนุพันธ์}
+ในคาบเรียนที่ผ่านมาเราได้ศึกษาอนุพันธ์ดังต่อไปนี้
+\begin{itemize}
+\item $\dx c = 0$ เมื่อ $c$ เป็นค่าคงตัว
+\item $\dx x^n = nx^{n-1}$ เมื่อ $n$ เป็นจำนวนจริงใด ๆ 
+\item สมบัติอนุพันธ์พีชคณิตของฟังก์ชัน
+\begin{eq*}
+\dx (f(x) + g(x)) &=& \dx f(x) + \dx g(x) \\
+\dx (f(x) - g(x)) &=& \dx f(x) - \dx g(x)\\
+\dx (f(x) g(x)) &=& f(x) \dx g(x) + g(x) \dx f(x) \\
+\dx \frac{f(x)}{g(x)} &=& \frac{g(x) \dx f(x) - f(x) \dx g(x)}{g(x)^2}
+\end{eq*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx 3$
+\task $\dx x^4$
+\task $\dx (x^2 + 1)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{tasks}(1)
+\task $\dx 3 = 0$ เพราะ $3$ เป็นค่าคงตัว
+\task $\dx x^4 = 4x^{4-1} = 4x^3$
+\task $\dx (x^2+1) = \dx x^2 + \dx 1 = 2x + 0 = 2x$
+\end{tasks}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section{สมบัติอนุพันธ์ของฟังก์ชันประกอบ}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+
+\begin{frame}
+\frametitle{ทบทวนฟังก์ชันประกอบ}
+\begin{thm}{}{}
+กำหนดให้ $f(x)$ และ $g(x)$ เป็นฟังก์ชัน แล้วเรานิยามฟังก์ชันประกอบเป็น
+\[ (f\circ g)(x) = f(g(x))\]
+\end{thm} \pause
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+ให้ $f(x) = x^2$ และ $g(x) = 3x$ จงหา 
+\begin{tasks}(2)
+\task $(f \circ g)(x)$ 
+\task $(g \circ f)(x)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{tasks}(1)
+\task
+\begin{eqnarray*}
+(f \circ g)(x) &=& f(g(x)) \pause \\
+&=& (g(x))^2 \pause \\
+&=& (3x)^2 \pause = 9x^2
+\end{eqnarray*}  \pause
+\task
+\begin{eqnarray*}
+(g \circ f)(x) &=& g(f(x)) \pause \\
+&=& 3f(x) \pause \\
+&=& 3x^2
+\end{eqnarray*}
+\end{tasks}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+ในทางปฏิบัติ เราจะเปลี่ยนฟังก์ชันให้เป็นฟังก์ชันประกอบ \pause
+\begin{ex}
+จงแปลงฟังก์ชัน $f(x) = (x+2)^4$ ให้อยู่ในรูปของฟังก์ชันประกอบ $(u \circ v)(x)$
+\end{ex}
+\begin{sol}
+ให้ $f(x) = (x+2)^4$ \pause 
+\begin{itemize}
+\item ถ้าเรากำหนดให้ $v(x) = x +2$ \pause จะได้ $f(x) = (v(x))^4$ \pause
+\item ถ้าเรากำหนดให้ $u(x) = x^4$ \pause จะได้ 
+\[ f(x) = (v(x))^4 \pause = u(v(x)) \pause = (u \circ v)(x)\]
+\end{itemize}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงแปลงฟังก์ชัน $f(x) = (x^2+3x)^3$ ให้อยู่ในรูปของฟังก์ชันประกอบ $(u \circ v)(x)$
+\end{ex}
+\begin{sol}
+ให้ $f(x) = (x^2+3x)^3$ \pause 
+\begin{itemize}
+\item ถ้าเรากำหนดให้ $v(x) = x^2+3x$ \pause จะได้ $f(x) = (v(x))^3$ \pause 
+\item ถ้าเรากำหนดให้ $u(x) = x^3$ \pause จะได้ 
+\[ f(x) = (v(x))^3 \pause = u(v(x)) \pause = (u \circ v)(x)\]
+\end{itemize}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงแปลงฟังก์ชัน $f(x) = \frac{1}{(x^3+1)^2}$ ให้อยู่ในรูปของฟังก์ชันประกอบ $(u \circ v)(x)$
+\end{ex}
+\begin{sol}
+ให้ $f(x) = \frac{1}{(x^3+1)^2}$ \pause 
+\begin{itemize}
+\item ถ้าเรากำหนดให้ $v(x) = x^3 +1$ \pause จะได้ $f(x) = \frac{1}{(v(x))^2}$ \pause
+\item ถ้าเรากำหนดให้ $u(x) = \frac{1}{x^2} = x^{-2}$ \pause จะได้ 
+\[ f(x) = \frac{1}{(u(x))^2} \pause = (u(x))^{-2} \pause = v(u(x)) \pause= (v \circ u)(x)\]
+\end{itemize}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงเขียนฟังก์ชัน $f(x) = \sqrt[3]{x^5+5}$ ให้อยู่ในรูปของฟังก์ชันประกอบ $(u \circ v)(x)$
+\end{ex}
+\begin{sol}
+ให้ $f(x) = \sqrt[3]{x^5+5}$ \pause 
+\begin{itemize}
+\item ถ้าเรากำหนดให้ $v(x) = x^5+5$ \pause จะได้ $f(x) = \sqrt[3]{v(x)}$ \pause
+\item ถ้าเรากำหนดให้ $u(x) = \sqrt[3]{x} = x^{\frac{1}{3}}$ \pause จะได้ 
+\[ f(x) = \sqrt[3]{v(x)} \pause = u(v(x)) \pause = (u \circ v)(x)\]
+\end{itemize}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{สูตรอนุพันธ์ของฟังก์ชันประกอบ (กฎลูกโซ่)}\pause 
+\begin{thm}{}{}
+ถ้า $f(x) = (u \circ v)(x)$ เป็นฟังก์ชันประกอบแล้ว \pause
+\begin{eqnarray}
+\dx f(x) = \dx (u \circ v)(x) \pause &=& \left(\frac{d}{d v(x)} u(v(x))\right)\left( \dx v(x)\right)
+\end{eqnarray}
+\end{thm}
+โดยที่ความหมายของ $\frac{d}{d v(x)} u(v(x))$ คือ การหาอนุพันธ์ $\frac{d}{dx} u(x)$ แล้วเปลี่ยนตัวแปร $x$ ให้กลายเป็นฟังก์ชัน $v(x)$
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx (x+2)^4$
+\end{ex}
+\begin{sol}
+กำหนดให้ $f(x) = (x+2)^4$ \pause เมื่อเขียนให้เป็นรูปของฟังก์ชันประกอบจะได้ \pause
+\[ v(x) = x+2\pause, \quad u(x) = x^4 \pause \]
+\[ \dx v(x) = 1\pause, \quad \dx u(x) = 4x^3 \rightarrow \frac{d}{d\red{v(x)}} u(\red{v(x)}) = 4(\red{v(x)})^3\pause\]
+ฉะนั้น
+\begin{eqnarray*}
+\dx f(x) = \dx (u \circ v)(x) \pause &=&  \left(\frac{d}{d v(x)} u(v(x))\right)\left( \dx v(x)\right) \pause \\
+&=& 4(v(x))^3 (1) \pause \\
+&=&  4(x+2)^3
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx (x^2+1)^3$
+\end{ex}
+\begin{sol}
+กำหนดให้ $f(x) = (x^2+1)^3$ \pause เมื่อเขียนให้เป็นรูปของฟังก์ชันประกอบจะได้ \pause
+\[ v(x) = x^2+1 \pause, \quad u(x) = x^3\pause\]
+\[\dx v(x) = 2x\pause, \quad \dx u(x) = 3x^2 \rightarrow \frac{d}{d\red{v(x)}} u(\red{v(x)}) = 3(\red{v(x)})^2\pause\] 
+ฉะนั้น
+\begin{eqnarray*}
+\dx f(x) = \dx (u \circ v)(x) \pause &=&  \left(\frac{d}{d v(x)} u(v(x))\right)\left( \dx v(x)\right) \pause \\
+&=& 3(v(x))^2 (2x) \pause \\
+&=&  3(x^2+1)^2 (2x) \pause = 6x(x^2+1)^2
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx  \frac{1}{(x^3+3x)^4}$
+\end{ex}
+\begin{sol}
+กำหนดให้ $f(x) = \tfrac{1}{(x^3+3x)^4}$ \pause เมื่อเขียนให้เป็นรูปของฟังก์ชันประกอบจะได้ \pause
+\[ v(x) = x^3+3x\pause, \quad u(x) = \tfrac{1}{x^4} = x^{-4}\pause\]
+\[ \dx v(x) = 3x^2+3\pause, \quad \dx u(x) = -4x^{-5} \rightarrow \frac{d}{dv(x)} u(v(x)) = -4(v(x))^{-5}\pause\]
+ฉะนั้น
+\begin{eqnarray*}
+\dx (u \circ v)(x) \pause &=& \left(\frac{d}{d v(x)} u(v(x))\right)\left( \dx v(x)\right)\pause \\
+&=&= -4(v(x))^{-5} \cdot (3x^2+3) \pause \\
+&=&  (-4(x^3+3x)^{-5} \cdot (3x^2+3) \pause= -4(3x^2+3)(x^3+3x)^{-5}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{สูตรอนุพันธ์ของฟังก์ชันประกอบแบบย่อ}
+\begin{thm}{}{}
+ถ้า $f(x) = (u \circ v)(x)$ เป็นฟังก์ชันประกอบแล้ว \pause
+\begin{eqnarray*}
+\dx f(x) = \dx (u \circ v)(x) \pause &=& u'(v(x)) \cdot v'(x) \pause \\
+&=& (u'(v) \cdot v' )(x) \nonumber
+\end{eqnarray*}
+\end{thm}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันยกกำลัง}
+เนื่องจากอนุพันธ์ของฟังก์ชันประกอบในรูปแบบฟังก์ชันยกกำลังใช้บ่อย เราจึงสรุปเป็นสูตรได้ตามนี้
+\begin{thm}{}{}
+กำหนดฟังก์ชัน $u(x)$ ที่หาอนุพันธ์ได้ และ $n$ เป็นจำนวนจริงที่ไม่เท่ากับ 0 แล้ว
+\begin{equation} \label{eq:diff_composite_poly}
+\dx (u(x))^n = nu(x)^{n-1} \dx u(x)
+\end{equation}
+\end{thm}
+\end{frame}
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx (3x+1)^4$
+\end{ex}
+\begin{sol}
+\begin{eq*}
+\dx (3x+1)^4 &=& 4(3x+1)^3 \dx (3x+1) \\
+&=& 4 (3x+1)^3 (3) \\
+&=& 12 (3x+1)^3
+\end{eq*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx (x^2-1)^5$
+\end{ex}
+\begin{sol}
+\begin{eq*}
+\dx (x^2-1)^5 &=& 5(x^2-1)^4 \dx (x^2-1) \\
+&=& 5 (x^2-1)^4 (2x) \\
+&=& 10x (x^2-1)^4
+\end{eq*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx \sqrt{6x+5}$
+\end{ex}
+\begin{sol}
+\begin{eq*}
+\dx \sqrt{6x+5} &=& \dx (6x+5)^{1/2} \\
+&=& \frac{1}{2} (6x+5)^{-1/2} \dx (6x+5) \\
+&=& \frac{1}{2 \sqrt{ 6x+5}} (6) \\
+&=& \frac{3}{\sqrt{6x+5}}
+\end{eq*}
+\end{sol}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%
+\section[ฟังก์ชันเลขชี้กำลัง]{อนุพันธ์ของฟังก์ชันเลขชี้กำลัง}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{ฟังก์ชันเลขชี้กำลัง}
+ฟังก์ชันนึงที่มีความสำคัญมากในการสร้างแบบจำลองทางคณิตศาสตร์ คือฟังก์ชันเลขชี้กำลัง
+\[ f(x) = a^x\]
+โดยที่ $a$ เป็นจำนวนจริงบวก
+
+\begin{remark}{ข้อควรระวัง}
+ฟังก์ชันยกกำลัง $f(x) = x^n$ และฟังก์ชันเลขชี้กำลัง $f(x) = n^x$ เป็นฟังก์ชันที่แตกต่างกัน โดยสังเกตได้จากตำแหน่งของตัวแปร เช่น
+\begin{eq*}
+f(x) = x^4 &\then& f(3) = 3^4 = (3)(3)(3)(3) = 81 \\
+g(x) = 4^x &\then& g(3) = 4^3 = (4)(4)(4) = 64
+\end{eq*}
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{ฟังก์ชันลอการิทึม}
+ฟังก์ชันที่ต้องพิจารณาคู่กับฟังก์ชันเลขชี้กำลังเสมอ คือฟังก์ชันลอการิทึม ซึ่งเป็นฟังก์ชันผกผันของฟังก์ชันเลขชี้กำลัง และมีนิยามดังนี้
+\begin{defn}{}{}
+นิยามฟังก์ชันลอการิทึมฐานธรรมชาติ 
+\[f(x) = \ln x\]
+เป็นฟังก์ชันผกผันของ $e^x$ \pa นั่นคือ
+\[ y = \ln x \text{ ก็ต่อเมื่อ } e^y = x\]
+\end{defn}
+เช่น ถ้ากำหนดให้ $a = \ln (e^7)$ แล้วจะได้ว่า $e^a = e^7$ นั่นคือ $a=7$ นั่นเอง
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันชี้กำลัง}
+\begin{thm}{}{}
+นิยามฟังก์ชัน $f(x) = e^x$ \pa เมื่อ $e$ เป็นค่าคงตัว $e \approx 2.71827$ \pa
+แล้วจะได้ว่า
+\begin{equation} \label{eq:diff_exp}
+\dx e^x = e^x\
+\end{equation}
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ \pa จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า\pa 
+\[ \dx e^{u(x)} = e^{u(x)} \dx u(x)\]
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx e^{2x}$
+\task $\dx e^{3x+4}$
+\task $\dx e^{x^2}$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx e^{2x} \pa = e^{2x} \dx 2x \pa &=& e^{2x} (2) \pa \\
+&=& 2e^{2x} \pa \\
+\dx e^{3x+4} \pa = e^{3x+4} \dx (3x+4) \pa &=& e^{3x+4} (3) \pa \\
+&=& 3e^{3x+4} \pa \\
+\dx e^{x^2} = e^{x^2} \dx x^2 \pa &=& e^{x^2} (2x) \pa \\
+&=& 2xe^{x^2}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(2)
+\task $\dx xe^x$
+\task $\dx e^{e^x}$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx xe^x \pa &=& x \dx e^x + e^x \dx x \mathnote{อนุพันธ์ของผลคูณฟังก์ชัน} \pa \\
+&=& x(e^x) + e^x(1) \pa \\
+&=& xe^x + e^x \pa \\
+\dx e^{e^x} \pa &=& e^{e^x} \dx e^x \pa \\
+&=& e^{e^x} (e^{x}) \pa \\
+&=& e^{(e^x + x)} \mathnote{สมบัติของฟังก์ชันเลขชี้กำลัง}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{ฟังก์ชันเลขชี้กำลัง สำหรับฐานใด ๆ}
+เราศึกษาอนุพันธ์ของฟังก์ชัน $f(x) = e^x$ เนื่องจากมีสมบัติที่จำได้ง่ายว่า
+\[ \dx e^x = e^x\]
+ถ้าฟังก์ชันเลขชี้กำลังมีฐานอื่นที่ไม่ใช่ $e$ เราสามารถใช้สมบัติของฟังก์ชันเลขชี้กำลังเพื่อแปลงได้ดังนี้ กำหนดฟังก์ชัน $f(x) = a^x$ แล้วจะได้ว่า
+\[a^x = (e^{(\ln a)})^x = e^{ (\ln a) x} \]
+โดยที่ $\ln a$ เป็นค่าคงที่ ถ้าเรามองเลขชี้กำลังเป็นฟังก์ชัน $u(x) = (\ln a)x$ และใช้กฎลูกโซ่จะได้
+\begin{eq*}
+\dx a^x \pa = \dx \left(e^{(\ln a)x}\right) \pa &=& e^{(\ln a)x} \left( \dx (\ln a) x\right) \\
+\pa &=& e^{(\ln a)x} (\ln a) \pa = (\ln a) a^x
+\end{eq*}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันเลขชี้กำลัง สำหรับฐานใด ๆ}
+\begin{thm}{}{}
+กำหนดฟังก์ชัน $f(x) = a^x$ แล้วจะได้ว่า
+\begin{equation} \label{eq:diff_exp_base_a}
+\dx a^x = (\ln a)a^x
+\end{equation}
+เมื่อ $\ln a$ เป็นค่าคงตัว
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ \pa จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า\pa 
+\[ \dx a^{u(x)} = (\ln a)a^{u(x)} \dx u(x)\]
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx 2^{x}$
+\task $\dx \left(\frac{1}{3^x}\right)$
+\task $\dx 4^{x^2}$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx 2^x \pa &=& (\ln 2)2^x \\
+\dx \left(\frac{1}{3^x}\right) &=& \dx (3^{-x}) \pa = (\ln 3)3^{-x} \left( \dx (-x) \right) \\ 
+\pa &=& -(\ln 3)3^{-x} \\
+\dx 4^{x^2} &=& (\ln 4) 4^{x^2} \left( \dx x^2\right) \\
+\pa &=& (2 \ln 4)(x)4^{x^2}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[ลอการิทึม]{อนุพันธ์ของฟังก์ชันลอการิทึม}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันลอการิทึม}
+\begin{thm}{}{}
+กำหนดให้ $f(x) = \ln x$ แล้วจะได้ว่า \pa 
+\begin{equation} \label{eq:diff_ln}
+\dx \ln x = \frac{1}{x}
+\end{equation}
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า \pa
+\[ \dx \ln (u(x)) = \frac{1}{u(x)} \left(  \dx u(x) \right)\]
+\end{thm}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx \ln (3x)$
+\task $\dx \ln (4x-2)$
+\task $\dx \ln(x^3+2x)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \ln (3x) \pa &=& \frac{1}{3x} \left(\dx 3x\right) \pa = \left(\frac{1}{3x} \right)( 3 )= \frac{1}{x} \pa \\
+\dx \ln (4x-2) \pa &=& \frac{1}{4x-2} \left(\dx (4x-2)\right) \pa = \left(\frac{1}{4x-2}\right) (4) = \frac{4}{4x-2} \pa \\
+\dx \ln (x^3+2x) \pa &=& \frac{1}{x^3+2x} \left(\dx (x^3+2x)\right) \pa = \left(\frac{1}{x^3+2x}\right) (3x^2+2) \pa \\
+&=& \frac{3x^2+2}{x^3+2x}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx \ln(e^x + x^e)$
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \ln (e^x + x^e) \pa &=& \frac{1}{e^x+x^e} \left( \dx (e^x + x^e) \right) \pa \\
+&=& \left( \frac{1}{e^x+x^e} \right) (e^x + ex^{e-1}) \pa \\
+&=& \frac{e^x + ex^{e-1}}{e^x + x^e} \pa \\
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา $\dx \ln (\ln x)$
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \ln (\ln x) \pa &=& \frac{1}{\ln x} \left( \dx \ln x\right) \pa \\
+&=& \frac{1}{\ln x} \left( \frac{1}{x}\right) \pa \\
+&=& \frac{1}{x\ln x}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{ข้อควรระวัง 1}
+\begin{remark}{}
+การเขียนฟังก์ชันลอการิทึมต้องระวังเรื่องการใส่วงเล็บ พิจารณา
+\[ f(x) = \ln x + 1\]
+ฟังก์ชันนี้สามารถตีความได้สองอย่างคือ $(\ln x) + 1$ หรือ $\ln (x+1)$ ดังนั้น เพื่อหลีกเลี่ยงความกำกวม จึงควรจะใส่วงเล็บทุกครั้ง\textbf{ถ้า}ตัวแปรในฟังก์ชันลอการิทึมไม่ใช่ $x$ โดด ๆ เช่น
+\[ \ln (2x), \quad \ln(x^4), \quad \ln (x^2+1), \quad \ln\left( \tfrac{1}{x} \right) \]
+และถ้ามีการบวกลบหรือคูณฟังก์ชันอื่น ควรจะวางไว้หน้าฟังก์ชัน $\ln$ เช่น
+\[ 2 \ln x, \quad x^3 + \ln x, \quad x\ln (x^2)\]
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{ข้อควรระวัง 2}
+\begin{remark}{}
+ฟังก์ชัน $f(x) =(\ln x)^2$ และ $g(x) = \ln (x^2)$ เป็นคนละฟังก์ชันกัน
+\begin{itemize}
+\item $(\ln x)^2$ หมายความว่าให้หาค่าของ $\ln x$ ก่อน จากนั้นนำค่าที่ได้ไปยกกำลังสอง
+\item $\ln (x^2)$ หมายความว่าให้นำ $x$ ไปยกกำลังสองก่อน จากนั้นนำค่าที่ได้ไปใส่ในฟังก์ชันลอการิทึม
+\end{itemize}
+ฉะนั้น เวลาใช้กฎลูกโซ่จึงต้องเรียงลำดับให้ถูกต้อง ดังตัวอย่างต่อไปนี้
+
+\end{remark}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา 
+\begin{tasks}(2)
+\task $\dx (\ln x)^2$
+\task $\dx \ln (x^2)$
+\end{tasks}
+\end{ex}
+
+\begin{sol} 
+\begin{columns}
+\begin{column}{0.5\textwidth}
+กำหนดให้ $u = \ln x$ จะได้ \pa
+\begin{eq*}
+\dx (\ln x)^2  \pa &=& \dx (u^2) \\
+\pa &=& 2u \dx (u) \\
+\pa &=& 2\ln x \left( \dx \ln x \right) \\
+\pa &=& 2 \ln x \left( \frac{1}{x} \right) \pa = \frac{2\ln x}{x}
+\end{eq*}
+\end{column}
+\begin{column}{0.5\textwidth}
+กำหนดให้ $u = x^2$ จะได้ \pa
+\begin{eq*}
+\dx \ln (x^2)  \pa &=& \dx \ln u \\
+\pa &=& \frac{1}{u} \dx (u) \\
+\pa &=& \frac{1}{x^2} \left( \dx x^2\right) \\
+\pa &=& \frac{1}{x^2} (2x) \pa = \frac{2x}{x^2} \pa = \frac{2}{x}
+\end{eq*}
+\end{column}
+\end{columns}
+\end{sol}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ฟังก์ชันลอการิทึม สำหรับฐานใด ๆ}
+เราได้ศึกษาอนุพันธ์ฟังก์ชันลอการิทึมฐานธรรมชาติ
+\[ \dx \ln x = \frac{1}{x}\]
+\pa ซึ่งที่จริงแล้วเราสามารถหาอนุพันธ์ของฟังก์ชันลอการิทึมฐานใดก็ได้ \pa โดยใช้สมบัติของฟังก์ชันลอการิทึมที่ว่า
+\[\log_a x \pa = \frac{\ln x}{\ln a}\]
+\pa ฉะนั้น 
+\begin{eq*}
+\dx (\log_a) x \pa = \dx \left(\frac{\ln x}{\ln a}\right) \pa &=& \frac{1}{\ln a} \left( \dx \ln x \right) \mathnote{$\ln a$ เป็นค่าคงตัว} \\
+\pa &=& \frac{1}{\ln a} \left( \frac{1}{x} \right) \pa = \frac{1}{(\ln a)x}
+\end{eq*}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันลอการิทึม สำหรับฐานใด ๆ}
+\begin{thm}{}{}
+กำหนดให้ $f(x) = \log_a x$ แล้วจะได้ว่า \pa 
+\begin{equation} \label{eq:diff_ln}
+\dx (\log_a) x = \frac{1}{(\ln a)x}
+\end{equation}
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า \pa
+\[ \dx \log_a (u(x)) = \frac{1}{(\ln a)u(x)} \left(\dx u(x)\right)\]
+\end{thm}
+\end{frame}
+
+
+%%%%%%%%%%%%%%
+\section[ตรีโกณมิติ]{อนุพันธ์ของฟังก์ชันตรีโกณมิติ}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชัน $f(x) = \sin x$}
+\begin{thm}{}{}
+กำหนดให้ $f(x) = \sin x$ \pa จะได้ว่า
+\begin{equation} 
+\dx \sin x = \cos x
+\end{equation}
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า \pa
+\[ \dx \sin (u(x)) = \cos u(x) \left( \dx u(x)\right)\]
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx \sin (4x)$
+\task $\dx \sin (5x+1)$ 
+\task $\dx \sin (e^x)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \sin (4x) \pa &=& \cos (4x) \dx 4x \pa \\
+&=& (\cos (4x))(4) \pa = 4 \cos (4x) \pa \\
+\dx \sin (5x+1) \pa &=& \cos (5x+1) \dx (5x+1) \pa \\
+&=& 5 \cos (5x+1) \pa \\
+\dx \sin (e^x) \pa &=& \cos (e^x) \dx (e^x) \pa \\
+&=& e^x \cos (e^x)
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชัน $f(x) = \cos x$}
+\begin{thm}{}{}
+กำหนดให้ $f(x) = \cos x$ \pa จะได้ว่า
+\begin{equation}
+\dx \cos x = -\sin x
+\end{equation} 
+\pa กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า
+\[ \dx \cos (u(x)) = -\sin u(x) \left( \dx u(x) \right)\]
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx \cos (-2x)$
+\task $\dx \cos (x^2+2)$ 
+\task $\dx \cos (\ln x)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \cos (-2x) \pa &=& -\sin (-2x) \left(\dx (-2x)\right)\pa \\
+&=& (-\sin(-2x))  (-2) \pa = 2 \sin (-2x) \pa \\
+\dx \cos (x^2+2) \pa &=& -\sin (x^2+2) \left(\dx (x^2+2) \right) \pa \\
+&=& (-\sin(x^2+2))(2x) \pa = -2x\sin(x^2+2) \pa \\
+\dx \cos (\ln x) \pa &=& -\sin (\ln x) \left(\dx \ln x\right) \pa = (-\sin (\ln x))\left( \frac{1}{x} \right) \\
+\pa &=& \tfrac{-\sin (\ln x)}{x}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชัน $f(x) = \tan x$}
+\begin{thm}{}{}
+กำหนดให้ $f(x) = \tan x$ จะได้ว่า
+\begin{equation}
+\dx \tan x = (\sec x)^2
+\end{equation}
+กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จากกฎลูกโซ่ของฟังก์ชันประกอบจะได้ว่า
+\[ \dx \tan (u(x)) = ( \sec u(x) )^2 \left( \dx u(x) \right)\]
+\end{thm}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันตรีโกณมิติอื่น}
+สำหรับฟังก์ชันตรีโกณมิติส่วนกลับ ได้แก่
+\[ \sec x = \frac{1}{\cos x}, \qquad \csc x = \frac{1}{\sin x}, \qquad \cot x = \frac{1}{\tan x}\]
+เราสามารถหาสูตรได้โดยใช้อนุพันธ์ฟังก์ชันผลหาร ซึ่งจะได้ผลลัพธ์ดังนี้
+\begin{thm}{}{}
+\begin{eq}
+\dx \sec u(x) &=& \sec u(x) \tan u(x) \dx u(x) \\
+\dx \csc u(x) &=& -\csc u(x) \cot u(x) \dx u(x) \\
+\dx \cot u(x) &=& -(\csc u(x))^2 \dx u(x)
+\end{eq}
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx \tan (3x+2)$
+\task $\dx \sec (x^3)$ 
+\task $\dx \cot (\cos x)$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \tan(3x+2) \pa &=& (\sec (3x+2))^2 \left( \dx (3x+2) \right) = 3(\sec (3x+2)^2) \\
+\dx \sec (x^3) \pa &=& \sec (x^3) \tan (x^3) \left( \dx (x^3) \right) \\
+\pa &=& 3x^2 \sec (x^3) \tan (x^3) \\
+\dx \cot (\cos x) \pa &=& -(\csc (\cos x))^2 \left( \dx \cos x\right) \\
+\pa &=& - (\csc (\sin x))^2 (- \sin x) \pa = (\csc (\cos x))^2 (\sin x)
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+%%%%%%%%%%%%%%
+\section[ตรีโกณมิติผกผัน]{อนุพันธ์ของฟังก์ชันตรีโกณมิติผกผัน}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{ฟังก์ชันตรีโกณมิติผกผัน}
+ถ้ากำหนดโดเมนที่เหมาะสม แล้วฟังก์ชันตรีโกณมิติทั้ง 6 ฟังก์ชัน ได้แก่
+\[\sin x, \cos x, \tan x, \csc x, \sec x, \cot x\]
+จะมีฟังก์ชันผกผัน ซึ่งเรานิยามด้วย
+\[\arcsin x, \arccos x, \arctan x, \arccsc x, \arcsec x, \arccot x\]
+ตามลำดับ ในบางตำราจะเขียนเป็น
+\[\sin^{-1} x, \cos^{-1} x, \tan^{-1} x, \csc^{-1} x, \sec^{-1} x, \cot^{-1} x\]
+แต่เพื่อไม่ให้สับสนเรื่องฟังก์ชันผกผัน $\sin^{-1} x$ กับฟังก์ชันตรีโกณมิติยกกำลัง $\sin^{n} x$ เราจึงหลีกเหลี่ยงการใช้สัญลักษณ์ $^{-1}$ และตั้งชื่อฟังก์ชันผกผันด้วยการใส่คำว่า arc นำหน้าแทน
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันตรีโกณมิติผกผัน}
+เราหาอนุพันธ์ของฟังก์ชันตรีโกณมิติผกผันด้วยเทคนิคเดียวกัน โดยจะได้ผลลัพธ์ดังนี้
+\begin{thm}{}{}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \arcsin x = \frac{1}{\sqrt{1-x^2}}$
+				\item $\dx \arccos x = -\frac{1}{\sqrt{1-x^2}}$
+				\item $ \dx \arctan x = \frac{1}{\sqrt{1+x^2}}$		
+			\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \arccot x = -\frac{1}{\sqrt{1+x^2}}$
+				\item $\dx \arcsec x = \frac{1}{|x|\sqrt{1-x^2}}$
+				\item $ \dx \arccsc x = -\frac{1}{|x|\sqrt{1-x^2}}$
+			\end{itemize}
+	\end{column}
+\end{columns}
+\end{thm}
+บทพิสูจน์ของทฤษฎีบทนี้ อยู่ในส่วนบทพิสูจน์ F)
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันตรีโกณมิติผกผัน (ต่อ)}
+กำหนดให้ $u = u(x)$ เป็นฟังก์ชันที่หาอนุพันธ์ได้ จะได้สูตรของฟังก์ชันประกอบดังนี้
+\begin{thm}{}{}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \arcsin u = \frac{1}{\sqrt{1-u^2}} \dux $
+				\item $\dx \arccos u = -\frac{1}{\sqrt{1-x^2}} \dux $
+				\item $ \dx \arctan u = \frac{1}{\sqrt{1+x^2}} \dux$		
+			\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \arccot u = -\frac{1}{\sqrt{1+x^2}} \dux $
+				\item $\dx \arcsec u = \frac{1}{|x|\sqrt{1-x^2}} \dux $
+				\item $ \dx \arccsc u = \frac{-1}{|x|\sqrt{1-x^2}} \dux$
+			\end{itemize}
+	\end{column}
+\end{columns}
+\end{thm}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{ex}
+จงหา
+\begin{tasks}(3)
+\task $\dx \arcsin (3x)$
+\task $\dx \arccos (x^4)$ 
+\task $\dx \arctan (\sqrt{x})$
+\end{tasks}
+\end{ex}
+\begin{sol}
+\begin{eqnarray*}
+\dx \arcsin (\red{3x}) \pa &=& \frac{1}{\sqrt{1-(\red{3x})^2}} \dx (\red{3x}) \pa = \frac{3}{\sqrt{1-9x^2}}\\
+\dx \arccos (\red{x^2}) \pa &=& -\frac{1}{\sqrt{1-(\red{x^2})^2}}\dx (\red{x^2}) \pa = -\frac{2x}{\sqrt{1-x^4}} \pa \\
+\dx \arctan (\red{\sqrt{x}}) \pa &=& \frac{1}{\sqrt{1 + (\red{\sqrt{x}})^2}} \dx (\red{\sqrt{x}}) \pa \\
+&=& \frac{1}{\sqrt{1+x}} \left(\frac{1}{2}x^{-\frac{1}{2}} \right) = \frac{1}{2\sqrt{x}\sqrt{1+x}} = \frac{1}{2\sqrt{x(1+x)}}
+\end{eqnarray*}
+\end{sol}
+\end{frame}
+
+
+%%%%%%%%%%%%%%
+\section[ไฮเปอร์โบลิก]{อนุพันธ์ฟังก์ชันไฮเปอร์โบลิก}
+\frame{\sectionpage}
+%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{เส้นโค้งไฮเปอร์โบลิกคืออะไร}
+พิจารณาโซ่ที่คล้องบนเสาสองข้าง ถ้าโซ่มีความยาวมากกว่าระยะห่างระหว่างเสาแล้วโซ่จะถูกแรงโน้มถ่วงดึงลงมา ทำให้เกิดเป็นรูปเส้นโค้งขึ้นมา
+\addfig{0.5}{diff_hyperbolic_intro1}{เส้นโค้งไฮเปอร์โบลิกที่เกิดจากแขวนโซ่ระหว่างเสาสองต้น}{}
+\end{frame}
+
+\begin{frame}
+ในทางกลับกัน การจะสร้างเส้นโค้งสะพานให้มีโครงสร้างที่แข็งแรงและกระจายน้ำหนักไปยังพื้นสองข้างได้ดีที่สุด ต้องใช้เส้นโค้งรูปแบบเดียวกันกับโซ่
+\addfig{0.35}{diff_hyperbolic_intro2}{Gateway Arch (สหรัฐอเมริกา) ที่สร้างขึ้นโดยใช้ฟังก์ชันไฮเปอร์โบลิก}{}
+\end{frame}
+
+\begin{frame}
+\frametitle{นิยามฟังก์ชันไฮเปอร์โบลิก}
+แม้ว่าจะดูคล้ายกับเส้นโค้งของฟังก์ชันพาราโบลา $f(x) = x^2$ แต่ที่จริงแล้วเส้นโค้งนี้ขึ้นอยู่กับฟังก์ชันเลขชี้กำลัง $f(x) = e^x$ ตามนิยามดังนี้
+\begin{defn}{}{}
+\begin{eq}
+\sinh x &=& \frac{e^x - e^{-x}}{2} \\
+\cosh x &=& \frac{e^x + e^{-x}}{2} \\
+\tanh x &=& \frac{\sinh x}{\cosh x} = \frac{e^x - e^{-x}}{e^x + e^{-x}} 
+\end{eq}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{นิยามฟังก์ชันไฮเปอร์โบลิกส่วนกลับ}
+เราสามารถนิยามฟังก์ชันตรีไฮเปอร์โบลิกส่วนกลับ ได้ในทำนองเดียวกันกับฟังก์ชันตรีโกณมิติส่วนกลับได้ดังนี้
+\begin{defn}{}{}
+\begin{eq}
+\csch x &=& \frac{1}{\sinh x} = \frac{2}{e^x - e^{-x}} \\
+\sech x &=& \frac{1}{\cosh x} = \frac{2}{e^x + e^{-x}} \\
+\coth x &=& \frac{1}{\tanh x} = \frac{e^x + e^{-x}}{e^x - e^{-x}}
+\end{eq}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\addfig{0.9}{diff_hyperbolic_graph}{กราฟของฟังก์ชันไฮเปอร์โบลิกทั้ง 6 ฟังก์ชัน}{}
+\end{frame}
+
+\begin{frame}
+\frametitle{อนุพันธ์ฟังก์ชันไฮเปอร์โบลิก}
+เนื่องจากฟังก์ชันไฮเปอร์โบลิก สร้างขึ้นมาจากฟังก์ชันเลขชี้กำลัง เราจึงหาอนุพันธ์ได้โดยตรงดังนี้
+\begin{thm}{}{}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \sinh x = \cosh x$
+				\item $\dx \cosh x = \sinh x$
+				\item $\dx \tanh x = (\sech x)^2$	
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item $\dx \coth x = (\csch x)^2$
+				\item $\dx \sech x = -\sech x \tanh x$
+				\item $\dx \csch x = -\csch x \coth x$
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{thm}
+การพิสูจน์อนุพันธ์ของ $\sinh x$ อยู่ในบทพิสูจน์ G)
+\end{frame}
