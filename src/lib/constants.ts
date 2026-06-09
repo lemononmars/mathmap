@@ -1,1 +1,0 @@
-export const IMAGE_PREFIX = `https://raw.githubusercontent.com/lemononmars/codebreaker/main`
