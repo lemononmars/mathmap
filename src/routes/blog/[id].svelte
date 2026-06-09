@@ -1,14 +1,11 @@
 <script lang=ts>
-   import type {IEvent} from '$lib/interfaces'
    import {getImageURL} from '$lib/supabase'
-   import {getMD} from '$lib/data/events/md'
    import { onMount } from 'svelte';
-
-   export let content: IEvent
    let md: any
+   export let content
 
    onMount(async() =>{
-      md = await getMD(content.content)
+      md = content
    })
    
 </script>
