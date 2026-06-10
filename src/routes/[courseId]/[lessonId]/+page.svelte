@@ -58,7 +58,7 @@
 		<!-- Lesson Content -->
 		<div class="p-6">
 			<div class="prose prose-indigo max-w-none text-gray-700 leading-relaxed text-lg mb-8">
-				<p>{lesson.content}</p>
+				{@html lesson.content}
 			</div>
 
 			<!-- Quiz Section -->
@@ -66,7 +66,7 @@
 				<h3 class="font-bold text-indigo-900 mb-6 text-xl">Knowledge Check</h3>
 
 				<div class="mb-4">
-					<p class="font-medium text-gray-800 text-lg mb-4">{currentQuestion.question}</p>
+					<p class="font-medium text-gray-800 text-lg mb-4">{@html currentQuestion.question}</p>
 
 					<div class="space-y-3">
 						{#each currentQuestion.options as option, index}
@@ -80,7 +80,7 @@
 								onclick={() => !showResult && (selectedOption = index)}
 								disabled={showResult}
 							>
-								{option}
+								{@html option}
 							</button>
 						{/each}
 					</div>
