@@ -8,10 +8,10 @@
 <div class="flex flex-col min-h-screen max-w-md mx-auto bg-white shadow-xl overflow-hidden relative">
 	<!-- Top App Bar -->
 	<header class="bg-indigo-600 text-white p-4 flex justify-between items-center shadow-md z-10 sticky top-0">
-		<div class="font-bold text-xl flex items-center gap-2">
+		<a href="/reference" class="font-bold text-xl flex items-center gap-2 hover:text-indigo-200 transition-colors" title="Reference Page">
 			<Map size={24} />
 			MathQuest
-		</div>
+		</a>
 		<div class="flex items-center gap-4 bg-indigo-700 px-3 py-1.5 rounded-full text-sm font-semibold border border-indigo-500 shadow-inner">
 			<div class="flex items-center gap-1 text-yellow-300" title="Points">
 				<Trophy size={16} />
