@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { userState, initAuth } from '$lib/state.svelte';
+	import { userState, initAuth, setGuestMode } from '$lib/state.svelte';
 	import { supabase } from '$lib/supabase';
 	import { Home, Trophy, Medal, Map, LogOut, LogIn } from '@lucide/svelte';
 	import { onMount } from 'svelte';
@@ -31,7 +31,7 @@
 </script>
 
 <div class="flex flex-col min-h-screen max-w-md mx-auto bg-white shadow-xl overflow-hidden relative">
-	{#if userState.user === null}
+	{#if userState.user === null && !userState.isGuest}
 		<!-- Login Screen -->
 		<div class="flex-1 flex flex-col items-center justify-center bg-indigo-50 p-6 text-center h-screen">
 			<div class="bg-indigo-600 text-white p-6 rounded-full mb-6 shadow-lg">
@@ -51,6 +51,13 @@
 					<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
 				</svg>
 				Sign in with Google
+			</button>
+
+			<button
+				onclick={setGuestMode}
+				class="mt-4 text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
+			>
+				Play without account
 			</button>
 		</div>
 	{:else}
