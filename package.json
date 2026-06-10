@@ -26,7 +26,6 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.17.0",
-		"katex": "^0.17.0",
-		"phaser": "^4.1.0"
+		"katex": "^0.17.0"
 	}
 }
