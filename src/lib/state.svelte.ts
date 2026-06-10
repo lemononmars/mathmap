@@ -16,6 +16,11 @@ export const userState = $state<UserState>({
 });
 
 export async function initAuth() {
+	if (!supabase) {
+		console.warn('Supabase client is not initialized. Auth features are disabled.');
+		return;
+	}
+
 	const { data: { session } } = await supabase.auth.getSession();
 	userState.user = session?.user ?? null;
 	if (userState.user) {
@@ -39,7 +44,7 @@ export async function initAuth() {
 }
 
 export async function loadProgress() {
-	if (!userState.user) return;
+	if (!userState.user || !supabase) return;
 
 	const { data, error } = await supabase
 		.from('profiles')
@@ -60,7 +65,7 @@ export async function loadProgress() {
 }
 
 export async function syncProgress() {
-	if (!userState.user) return;
+	if (!userState.user || !supabase) return;
 
 	const { error } = await supabase
 		.from('profiles')
