@@ -22,7 +22,7 @@
    let currentPoint: any
 
    onMount(async()=>{
-      b = JXG.JSXGraph.initBoard('jxgbox', { 
+      b = (window as any).JXG.JSXGraph.initBoard('jxgbox', {
          boundingbox: [-5, 5, 5, -5], axis:true
       })
       var c = b.create('circle',[[0,1],[1,0]],{dash:2,strokeWidth:1,strokeOpacity:0.6});
