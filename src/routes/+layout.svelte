@@ -12,6 +12,10 @@
 	});
 
 	async function signInWithGoogle() {
+		if (!supabase) {
+			console.warn('Supabase client is not initialized. Sign in is disabled.');
+			return;
+		}
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
@@ -21,6 +25,7 @@
 	}
 
 	async function signOut() {
+		if (!supabase) return;
 		await supabase.auth.signOut();
 	}
 </script>
