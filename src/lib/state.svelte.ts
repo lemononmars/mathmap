@@ -3,6 +3,7 @@ import { supabase } from './supabase';
 
 type UserState = {
 	user: User | null;
+	isGuest: boolean;
 	points: number;
 	badges: string[];
 	completedLessons: string[];
@@ -10,6 +11,7 @@ type UserState = {
 
 export const userState = $state<UserState>({
 	user: null,
+	isGuest: false,
 	points: 0,
 	badges: [],
 	completedLessons: []
@@ -35,6 +37,7 @@ export async function initAuth() {
 				await loadProgress();
 			} else {
 				// Reset state on sign out
+				userState.isGuest = false;
 				userState.points = 0;
 				userState.badges = [];
 				userState.completedLessons = [];
@@ -44,7 +47,7 @@ export async function initAuth() {
 }
 
 export async function loadProgress() {
-	if (!userState.user || !supabase) return;
+	if (userState.isGuest || !userState.user || !supabase) return;
 
 	const { data, error } = await supabase
 		.from('profiles')
@@ -65,7 +68,7 @@ export async function loadProgress() {
 }
 
 export async function syncProgress() {
-	if (!userState.user || !supabase) return;
+	if (userState.isGuest || !userState.user || !supabase) return;
 
 	const { error } = await supabase
 		.from('profiles')
@@ -80,6 +83,13 @@ export async function syncProgress() {
 	if (error) {
 		console.error('Error syncing progress:', error);
 	}
+}
+
+export function setGuestMode() {
+	userState.isGuest = true;
+	userState.points = 0;
+	userState.badges = [];
+	userState.completedLessons = [];
 }
 
 export function addPoints(amount: number) {
