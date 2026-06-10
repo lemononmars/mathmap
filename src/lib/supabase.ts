@@ -1,1 +1,14 @@
-export function getImageURL(bucket: string, path: string) { return `/${bucket}/${path}`; }
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY;
+
+export const supabase = (supabaseUrl && supabaseAnonKey)
+	? createClient(supabaseUrl, supabaseAnonKey)
+	: null;
+
+export function getImageURL(bucket: string, path: string) {
+	if (!supabase) return '';
+	const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+	return data.publicUrl;
+}

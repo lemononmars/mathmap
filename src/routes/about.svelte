@@ -5,8 +5,9 @@
    import {onMount} from 'svelte'
    // import Test from '$lib/md/test.md'
 
-   let x = randrange(-5, 5)
-   let y = randrange(-5, 5)
+   import JXG from 'jsxgraph'
+   let x = $state(randrange(-5, 5));
+   let y = $state(randrange(-5, 5));
    let question = $derived(katex.renderToString(toPolyString([1,-x-y,x*y]) + '=0'));
    let solution = $derived(katex.renderToString(`x = ${x}, \\quad x = ${y}`));
 
