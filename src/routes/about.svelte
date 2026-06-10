@@ -7,8 +7,8 @@
 
    let x = randrange(-5, 5)
    let y = randrange(-5, 5)
-   $: question = katex.renderToString(toPolyString([1,-x-y,x*y]) + '=0');
-   $: solution = katex.renderToString(`x = ${x}, \\quad x = ${y}`)
+   let question = $derived(katex.renderToString(toPolyString([1,-x-y,x*y]) + '=0'));
+   let solution = $derived(katex.renderToString(`x = ${x}, \\quad x = ${y}`));
 
    function generate(){
       x = randrange(-5, 5)
@@ -21,10 +21,10 @@
    let currentPoint: any
 
    onMount(async()=>{
-      b = JXG.JSXGraph.initBoard('jxgbox', { 
+      b = (window as any).JXG.JSXGraph.initBoard('jxgbox', {
          boundingbox: [-5, 5, 5, -5], axis:true
       })
-      var c = brd.create('circle',[[0,1],[1,0]],{dash:2,strokeWidth:1,strokeOpacity:0.6});
+      var c = b.create('circle',[[0,1],[1,0]],{dash:2,strokeWidth:1,strokeOpacity:0.6});
    })
 
 </script>
