@@ -6,6 +6,15 @@ const LECTURES_DIR = 'src/lib/source/lectures';
 const WORKSHEETS_DIR = 'src/lib/source/worksheets';
 const OUTPUT_FILE = 'src/lib/courses.ts';
 
+const GRAPHICS_SRC = 'src/lib/source/graphics';
+const GRAPHICS_DEST = 'static/graphics';
+if (fs.existsSync(GRAPHICS_SRC)) {
+    if (!fs.existsSync(GRAPHICS_DEST)) fs.mkdirSync(GRAPHICS_DEST, { recursive: true });
+    fs.readdirSync(GRAPHICS_SRC).forEach(file => {
+        fs.copyFileSync(path.join(GRAPHICS_SRC, file), path.join(GRAPHICS_DEST, file));
+    });
+}
+
 const macros = {
     "\\bv": "\\langle #1 \\rangle",
     "\\bvec": "\\mathbf{#1}",
@@ -17,9 +26,17 @@ const macros = {
 };
 
 function renderMath(text) {
-    // Remove tikzpicture and figures
-    text = text.replace(/\\begin\{figure\}[\s\S]*?\\end\{figure\}/g, '<div class="text-gray-500 italic">[Figure omitted]</div>');
-    text = text.replace(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/g, '');
+    // Preserve tikzpicture blocks first
+    const tikzBlocks = [];
+    text = text.replace(/\\begin\{tikzpicture\}(?:\[.*?\])?([\s\S]*?)\\end\{tikzpicture\}/g, (m, p1) => {
+        tikzBlocks.push(p1);
+        return '%%TIKZ_BLOCK_' + (tikzBlocks.length - 1) + '%%';
+    });
+
+    // Remove figure environment wrappers
+    text = text.replace(/\\begin\{figure\}(?:\[.*?\])?([\s\S]*?)\\end\{figure\}/g, (m, p1) => {
+        return '<div class="my-4">' + p1.trim() + '</div>';
+    });
 
     // Replace environments
     text = text.replace(/\\begin\{defn\}\{(.*?)\}\{(.*?)\}([\s\S]*?)\\end\{defn\}/g,
@@ -29,7 +46,7 @@ function renderMath(text) {
     text = text.replace(/\\begin\{ex\}(?:\{(.*?)\})?([\s\S]*?)\\end\{ex\}/g,
         '<div class="bg-green-50 p-4 rounded-lg my-4 border border-green-200"><strong>Example $1</strong>$2</div>');
     text = text.replace(/\\begin\{sol\}([\s\S]*?)\\end\{sol\}/g,
-        '<div class="bg-gray-50 p-4 rounded-lg my-4 border border-gray-200"><strong>Solution</strong>$1</div>');
+        '<details class="bg-gray-50 p-4 rounded-lg my-4 border border-gray-200"><summary class="font-bold cursor-pointer text-indigo-700">Solution</summary><div class="mt-4">$1</div></details>');
 
     // block math
     text = text.replace(/\\\[([\s\S]*?)\\\]/g, (m, p1) => {
@@ -66,16 +83,44 @@ function renderMath(text) {
 
     // Remove frame environments
     text = text.replace(/\\begin\{frame\}(?:\[.*?\])?(?:\{(.*?)\})?/g, (m, p1) => {
-        return p1 ? `<h3>${p1}</h3>` : '';
+        return p1 ? `<h1 class="text-2xl font-extrabold mt-6 mb-4 text-indigo-900">${p1}</h1>` : '';
     });
     text = text.replace(/\\end\{frame\}/g, '');
-    text = text.replace(/\\frametitle\{(.*?)\}/g, '<h3>$1</h3>');
+    text = text.replace(/\\frametitle\{(.*?)\}/g, '<h1 class="text-2xl font-extrabold mt-6 mb-4 text-indigo-900">$1</h1>');
+    text = text.replace(/\\frame\{(.*?)\}/g, (m, p1) => {
+        if (p1 === '\\titlepage' || p1 === 'titlepage' || p1 === '\\sectionpage' || p1 === 'sectionpage') return '';
+        return `<h1 class="text-2xl font-extrabold mt-6 mb-4 text-indigo-900">${p1}</h1>`;
+    });
+
     text = text.replace(/\\tableofcontents/g, '');
     text = text.replace(/\\sectionpage/g, '');
-    text = text.replace(/\\addfig\{.*?\}\{.*?\}\{.*?\}\{.*?\}/g, '');
+
+    text = text.replace(/\\addfig(?:\[.*?\])?(?:\{.*?\})?\{.*?\}\{(.*?)\}\{(.*?)\}\{.*?\}/g, (m, img, alt) => {
+        const ext = img.match(/\.[a-zA-Z0-9]+$/) ? '' : '.png';
+        const basename = img.split('/').pop();
+        return `<img src="/graphics/${basename}${ext}" alt="${alt}" class="my-6 mx-auto max-w-full rounded shadow" />`;
+    });
+    text = text.replace(/\\addfig(?:\[.*?\])?\{.*?\}\{(.*?)\}\{(.*?)\}\{.*?\}/g, (m, img, alt) => {
+        const ext = img.match(/\.[a-zA-Z0-9]+$/) ? '' : '.png';
+        const basename = img.split('/').pop();
+        return `<img src="/graphics/${basename}${ext}" alt="${alt}" class="my-6 mx-auto max-w-full rounded shadow" />`;
+    });
+    text = text.replace(/\\includegraphics(?:\[.*?\])?\{(.*?)\}/g, (m, img) => {
+        const ext = img.match(/\.[a-zA-Z0-9]+$/) ? '' : '.png';
+        const basename = img.split('/').pop();
+        return `<img src="/graphics/${basename}${ext}" alt="Image" class="my-6 mx-auto max-w-full rounded shadow" />`;
+    });
 
     // line breaks
     text = text.replace(/\\\\/g, '<br/>');
+
+    // Remove \pa
+    text = text.replace(/\\pa/g, '');
+
+    // Restore tikz blocks
+    text = text.replace(/%%TIKZ_BLOCK_(\d+)%%/g, (m, p1) => {
+        return `<script type="text/tikz">\n\\begin{tikzpicture}\n${tikzBlocks[parseInt(p1)]}\n\\end{tikzpicture}\n</script>`;
+    });
 
     return text.trim();
 }
@@ -110,7 +155,6 @@ function parseWorksheet(filePath) {
 
         questions.push({
             id: `q${i/2 + 1}`,
-
             question: questionContent,
             options: options.length > 0 ? options : ["True", "False"],
             correctOptionIndex: 0,
@@ -150,14 +194,11 @@ for (const file of lectureFiles) {
 
         const htmlContent = renderMath(secContent.replace(/\\section(?:\[.*?\])?\{.*?\}/, ''));
 
-        // Match questions to sections if possible, else distribute
-        const lessonQuestions = wsQuestions.filter(q => q.topic === secTitle);
-
         lessons.push({
             id: `${id}-sec-${i + 1}`,
             title: secTitle,
             content: htmlContent,
-            quiz: lessonQuestions.length > 0 ? lessonQuestions : (wsQuestions.length > 0 && i === sections.length - 1 ? wsQuestions : [
+            quiz: (wsQuestions.length > 0 && i === sections.length - 1 ? wsQuestions : [
                 {
                     id: "dummy",
                     question: "Did you understand this lesson?",
