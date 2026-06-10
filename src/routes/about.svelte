@@ -5,10 +5,11 @@
    import {onMount} from 'svelte'
    // import Test from '$lib/md/test.md'
 
-   let x = randrange(-5, 5)
-   let y = randrange(-5, 5)
-   $: question = katex.renderToString(toPolyString([1,-x-y,x*y]) + '=0');
-   $: solution = katex.renderToString(`x = ${x}, \\quad x = ${y}`)
+   import JXG from 'jsxgraph'
+   let x = $state(randrange(-5, 5));
+   let y = $state(randrange(-5, 5));
+   let question = $derived(katex.renderToString(toPolyString([1,-x-y,x*y]) + '=0'));
+   let solution = $derived(katex.renderToString(`x = ${x}, \\quad x = ${y}`));
 
    function generate(){
       x = randrange(-5, 5)
@@ -24,7 +25,7 @@
       b = JXG.JSXGraph.initBoard('jxgbox', { 
          boundingbox: [-5, 5, 5, -5], axis:true
       })
-      var c = brd.create('circle',[[0,1],[1,0]],{dash:2,strokeWidth:1,strokeOpacity:0.6});
+      var c = b.create('circle',[[0,1],[1,0]],{dash:2,strokeWidth:1,strokeOpacity:0.6});
    })
 
 </script>

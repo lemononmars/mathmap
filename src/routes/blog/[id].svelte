@@ -1,8 +1,8 @@
 <script lang=ts>
    import {getImageURL} from '$lib/supabase'
    import { onMount } from 'svelte';
-   let md: any
-   export let content
+   let md: any = $state(null);
+   let { content } = $props();
 
    onMount(async() =>{
       md = content
