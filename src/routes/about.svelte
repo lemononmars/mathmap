@@ -3,7 +3,6 @@
    import {randrange} from '$lib/math/random'
    import {toPolyString} from '$lib/math/polynomial'
    import {onMount} from 'svelte'
-   // import Test from '$lib/md/test.md'
 
    import JXG from 'jsxgraph'
    let x = $state(randrange(-5, 5));
