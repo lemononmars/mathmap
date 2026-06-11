@@ -3,8 +3,8 @@ export function toPolyString(coeff: number[]) {
    return coeff.reduce((prev, curr, idx)=>
       prev 
       + (curr == 0? '': 
-         ((curr < 0 || idx == 0 )? '': '+') 
-            + ((curr == 1 || curr == -1)? '' : `${curr}`) 
+         ((curr < 0 || prev == '' )? (curr < 0 ? '-' : '') : '+')
+            + ((curr == 1 || curr == -1)? (degree-idx-1 == 0 ? '1' : '') : `${Math.abs(curr)}`)
             + varPower(degree-idx-1
          )
       )
