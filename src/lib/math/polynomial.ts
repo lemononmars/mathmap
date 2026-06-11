@@ -1,4 +1,8 @@
 export function toPolyString(coeff: number[]) {
+   if (coeff.length === 0) return '';
+   const isAllZero = coeff.every(c => c === 0);
+   if (isAllZero) return '0';
+
    const degree = coeff.length
    return coeff.reduce((prev, curr, idx)=>
       prev 
