@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { addPoints, completeLesson, unlockBadge } from '$lib/state.svelte';
+	import { completeLesson } from '$lib/state.svelte';
 	import { ArrowLeft, CheckCircle, XCircle, Trophy } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
@@ -22,9 +22,7 @@
 			selectedOption = null;
 		} else {
 			quizFinished = true;
-			completeLesson(lesson.id);
-			if (course.id === 'calculus-1') unlockBadge('calc-novice');
-			if (course.id === 'precalculus') unlockBadge('precalc-pro');
+			completeLesson(lesson.id, course.id);
 		}
 	}
 
