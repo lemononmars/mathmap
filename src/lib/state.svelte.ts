@@ -67,24 +67,6 @@ export async function loadProgress() {
 	}
 }
 
-export async function syncProgress() {
-	if (userState.isGuest || !userState.user || !supabase) return;
-
-	const { error } = await supabase
-		.from('profiles')
-		.update({
-			points: userState.points,
-			badges: userState.badges,
-			completed_lessons: userState.completedLessons,
-			updated_at: new Date().toISOString()
-		})
-		.eq('user_id', userState.user.id);
-
-	if (error) {
-		console.error('Error syncing progress:', error);
-	}
-}
-
 export function setGuestMode() {
 	userState.isGuest = true;
 	userState.points = 0;
@@ -92,21 +74,32 @@ export function setGuestMode() {
 	userState.completedLessons = [];
 }
 
-export function addPoints(amount: number) {
-	userState.points += amount;
-	syncProgress();
-}
+export async function completeLesson(lessonId: string, courseId: string) {
+	if (userState.completedLessons.includes(lessonId)) return;
 
-export function unlockBadge(badgeId: string) {
-	if (!userState.badges.includes(badgeId)) {
+	// Optimistically update UI state
+	userState.completedLessons.push(lessonId);
+	userState.points += 10;
+
+	let badgeId: string | null = null;
+	if (courseId === 'calculus-1') badgeId = 'calc-novice';
+	if (courseId === 'precalculus') badgeId = 'precalc-pro';
+
+	if (badgeId && !userState.badges.includes(badgeId)) {
 		userState.badges.push(badgeId);
-		syncProgress();
 	}
-}
 
-export function completeLesson(lessonId: string) {
-	if (!userState.completedLessons.includes(lessonId)) {
-		userState.completedLessons.push(lessonId);
-		syncProgress();
+	if (userState.isGuest || !userState.user || !supabase) return;
+
+	// Call secure RPC to update database
+	const { error } = await supabase.rpc('update_progress', {
+		p_lesson_id: lessonId,
+		p_badge_id: badgeId
+	});
+
+	if (error) {
+		console.error('Error updating progress:', error);
+		// Revert optimistic update on failure by reloading
+		await loadProgress();
 	}
 }

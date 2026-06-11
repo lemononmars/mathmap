@@ -16,8 +16,48 @@ create policy "Public profiles are viewable by everyone." on profiles
 create policy "Users can insert their own profile." on profiles
   for insert with check (auth.uid() = user_id);
 
-create policy "Users can update own profile." on profiles
-  for update using (auth.uid() = user_id);
+-- Function to update progress securely
+create function public.update_progress(p_lesson_id text, p_badge_id text default null)
+returns void as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_has_lesson boolean;
+  v_has_badge boolean;
+begin
+  if v_user_id is null then
+    return;
+  end if;
+
+  -- Check if lesson already completed
+  select completed_lessons ? p_lesson_id into v_has_lesson
+  from public.profiles
+  where user_id = v_user_id;
+
+  if not v_has_lesson then
+    update public.profiles
+    set
+      completed_lessons = completed_lessons || jsonb_build_array(p_lesson_id),
+      points = points + 10,
+      updated_at = now()
+    where user_id = v_user_id;
+  end if;
+
+  -- Add badge if provided and not already earned
+  if p_badge_id is not null then
+    select badges ? p_badge_id into v_has_badge
+    from public.profiles
+    where user_id = v_user_id;
+
+    if not v_has_badge then
+      update public.profiles
+      set
+        badges = badges || jsonb_build_array(p_badge_id),
+        updated_at = now()
+      where user_id = v_user_id;
+    end if;
+  end if;
+end;
+$$ language plpgsql security definer;
 
 -- Function to handle new user signup
 create function public.handle_new_user()
