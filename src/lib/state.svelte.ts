@@ -75,31 +75,30 @@ export function setGuestMode() {
 }
 
 export async function completeLesson(lessonId: string, courseId: string) {
-	if (userState.completedLessons.includes(lessonId)) return;
+	if (!userState.completedLessons.includes(lessonId)) {
+		// Optimistic update
+		userState.completedLessons.push(lessonId);
+		userState.points += 10;
 
-	// Optimistically update UI state
-	userState.completedLessons.push(lessonId);
-	userState.points += 10;
+		if (courseId === 'calculus-1' && !userState.badges.includes('calc-novice')) {
+			userState.badges.push('calc-novice');
+		}
+		if (courseId === 'precalculus' && !userState.badges.includes('precalc-pro')) {
+			userState.badges.push('precalc-pro');
+		}
 
-	let badgeId: string | null = null;
-	if (courseId === 'calculus-1') badgeId = 'calc-novice';
-	if (courseId === 'precalculus') badgeId = 'precalc-pro';
+		if (userState.isGuest || !userState.user || !supabase) return;
 
-	if (badgeId && !userState.badges.includes(badgeId)) {
-		userState.badges.push(badgeId);
-	}
+		// Server sync
+		const { error } = await supabase.rpc('complete_lesson', {
+			p_lesson_id: lessonId,
+			p_course_id: courseId
+		});
 
-	if (userState.isGuest || !userState.user || !supabase) return;
-
-	// Call secure RPC to update database
-	const { error } = await supabase.rpc('update_progress', {
-		p_lesson_id: lessonId,
-		p_badge_id: badgeId
-	});
-
-	if (error) {
-		console.error('Error updating progress:', error);
-		// Revert optimistic update on failure by reloading
-		await loadProgress();
+		if (error) {
+			console.error('Error syncing lesson completion:', error);
+			// Optionally reload progress on error to revert optimistic update
+			await loadProgress();
+		}
 	}
 }

@@ -16,49 +16,6 @@ create policy "Public profiles are viewable by everyone." on profiles
 create policy "Users can insert their own profile." on profiles
   for insert with check (auth.uid() = user_id);
 
--- Function to update progress securely
-create function public.update_progress(p_lesson_id text, p_badge_id text default null)
-returns void as $$
-declare
-  v_user_id uuid := auth.uid();
-  v_has_lesson boolean;
-  v_has_badge boolean;
-begin
-  if v_user_id is null then
-    return;
-  end if;
-
-  -- Check if lesson already completed
-  select completed_lessons ? p_lesson_id into v_has_lesson
-  from public.profiles
-  where user_id = v_user_id;
-
-  if not v_has_lesson then
-    update public.profiles
-    set
-      completed_lessons = completed_lessons || jsonb_build_array(p_lesson_id),
-      points = points + 10,
-      updated_at = now()
-    where user_id = v_user_id;
-  end if;
-
-  -- Add badge if provided and not already earned
-  if p_badge_id is not null then
-    select badges ? p_badge_id into v_has_badge
-    from public.profiles
-    where user_id = v_user_id;
-
-    if not v_has_badge then
-      update public.profiles
-      set
-        badges = badges || jsonb_build_array(p_badge_id),
-        updated_at = now()
-      where user_id = v_user_id;
-    end if;
-  end if;
-end;
-$$ language plpgsql security definer;
-
 -- Function to handle new user signup
 create function public.handle_new_user()
 returns trigger as $$
@@ -73,3 +30,50 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- Secure function to handle lesson completion
+create function public.complete_lesson(p_lesson_id text, p_course_id text)
+returns void as $$
+declare
+  v_user_id uuid;
+  v_badges jsonb;
+  v_completed_lessons jsonb;
+begin
+  v_user_id := auth.uid();
+  if v_user_id is null then
+    return;
+  end if;
+
+  -- Get current progress
+  select badges, completed_lessons into v_badges, v_completed_lessons
+  from public.profiles
+  where user_id = v_user_id;
+
+  -- Only proceed if lesson not already completed
+  if not (v_completed_lessons ? p_lesson_id) then
+
+    -- Append lesson
+    v_completed_lessons := v_completed_lessons || jsonb_build_array(p_lesson_id);
+
+    -- Check and award course specific badges
+    if p_course_id = 'calculus-1' and not (v_badges ? 'calc-novice') then
+      v_badges := v_badges || jsonb_build_array('calc-novice');
+    end if;
+
+    if p_course_id = 'precalculus' and not (v_badges ? 'precalc-pro') then
+      v_badges := v_badges || jsonb_build_array('precalc-pro');
+    end if;
+
+    -- Update profile
+    update public.profiles
+    set
+      completed_lessons = v_completed_lessons,
+      badges = v_badges,
+      points = points + 10,
+      updated_at = now()
+    where user_id = v_user_id;
+
+  end if;
+
+end;
+$$ language plpgsql security definer;
