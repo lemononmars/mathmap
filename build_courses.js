@@ -47,8 +47,23 @@ function renderMath(text) {
         '<div class="bg-green-50 p-4 rounded-lg my-4 border border-green-200"><strong>Example $1</strong>$2</div>');
     text = text.replace(/\\begin\{sol\}([\s\S]*?)\\end\{sol\}/g,
         '<details class="bg-gray-50 p-4 rounded-lg my-4 border border-gray-200"><summary class="font-bold cursor-pointer text-indigo-700">Solution</summary><div class="mt-4">$1</div></details>');
+    text = text.replace(/\\begin\{thm\}(?:\{(.*?)\})?(?:\{(.*?)\})?([\s\S]*?)\\end\{thm\}/g, (m, p1, p2, p3) => {
+        let title = "";
+        if (p1 && p1.trim() !== '') {
+            title = ` ${p1}`;
+        }
+        if (p2 && p2.trim() !== '') {
+            title += `: ${p2}`;
+        }
+        return `<div class="bg-yellow-50 p-4 rounded-lg my-4 border border-yellow-200"><strong>Theorem${title}</strong>${p3}</div>`;
+    });
+    text = text.replace(/\\begin\{block\}(?:\{(.*?)\})?([\s\S]*?)\\end\{block\}/g, (m, p1, p2) => {
+        let title = p1 && p1.trim() !== '' ? `<strong>${p1}</strong><br/>` : '';
+        return `<div class="bg-gray-100 p-4 rounded-lg my-4 border border-gray-300">${title}${p2}</div>`;
+    });
 
     // block math
+    text = text.replace(/\\begin\{eq\}([\s\S]*?)\\end\{eq\}/g, '\\begin{equation}$1\\end{equation}');
     text = text.replace(/\\\[([\s\S]*?)\\\]/g, (m, p1) => {
         try { return katex.renderToString(p1, {displayMode: true, throwOnError: false, macros}); }
         catch (e) { return `<div>Error</div>`; }
@@ -66,6 +81,17 @@ function renderMath(text) {
         try { return katex.renderToString(p1, {throwOnError: false, macros}); }
         catch (e) { return `<span>Error</span>`; }
     });
+
+    // Clean up syntaxes
+    text = text.replace(/%+.*$/gm, '');
+    text = text.replace(/\\centering/g, '');
+    text = text.replace(/\\label\{.*?\}/g, '');
+    text = text.replace(/\\vspace\*?\{.*?\}/g, '');
+
+    // Custom replacements for slide and href
+    text = text.replace(/\\begin\{slide\}/g, '');
+    text = text.replace(/\\end\{slide\}/g, '');
+    text = text.replace(/\\href\{(.*?)\}\{(.*?)\}/g, '<a href="$1" target="_blank" class="text-indigo-600 underline">$2</a>');
 
     // lists
     text = text.replace(/\\begin\{itemize\}/g, '<ul class="list-disc pl-5 space-y-1 my-2">');
@@ -95,12 +121,7 @@ function renderMath(text) {
     text = text.replace(/\\tableofcontents/g, '');
     text = text.replace(/\\sectionpage/g, '');
 
-    text = text.replace(/\\addfig(?:\[.*?\])?(?:\{.*?\})?\{.*?\}\{(.*?)\}\{(.*?)\}\{.*?\}/g, (m, img, alt) => {
-        const ext = img.match(/\.[a-zA-Z0-9]+$/) ? '' : '.png';
-        const basename = img.split('/').pop();
-        return `<img src="/graphics/${basename}${ext}" alt="${alt}" class="my-6 mx-auto max-w-full rounded shadow" />`;
-    });
-    text = text.replace(/\\addfig(?:\[.*?\])?\{.*?\}\{(.*?)\}\{(.*?)\}\{.*?\}/g, (m, img, alt) => {
+    text = text.replace(/\\addfig(?:\[.*?\])?(?:\{.*?\})?\{(.*?)\}\{(.*?)\}\{.*?\}/g, (m, img, alt) => {
         const ext = img.match(/\.[a-zA-Z0-9]+$/) ? '' : '.png';
         const basename = img.split('/').pop();
         return `<img src="/graphics/${basename}${ext}" alt="${alt}" class="my-6 mx-auto max-w-full rounded shadow" />`;
