@@ -4,34 +4,15 @@ export function toPolyString(coeff: number[]) {
    if (isAllZero) return '0';
 
    const degree = coeff.length
-   let result = '';
-   for (let idx = 0; idx < degree; idx++) {
-      const curr = coeff[idx];
-      if (curr === 0) continue;
-
-      const power = degree - idx - 1;
-
-      // Handle sign
-      if (curr > 0 && result !== '') {
-         result += '+';
-      } else if (curr < 0) {
-         result += '-';
-      }
-
-      const absCurr = Math.abs(curr);
-
-      // Handle coefficient number
-      if (power === 0) {
-         result += absCurr;
-      } else {
-         if (absCurr !== 1) {
-            result += absCurr;
-         }
-         // Handle variable and power
-         result += power === 1 ? 'x' : `x^${power}`;
-      }
-   }
-   return result;
+   return coeff.reduce((prev, curr, idx)=>
+      prev 
+      + (curr == 0? '': 
+         ((curr < 0 || prev == '' )? (curr < 0 ? '-' : '') : '+')
+            + ((curr == 1 || curr == -1)? (degree-idx-1 == 0 ? '1' : '') : `${Math.abs(curr)}`)
+            + varPower(degree-idx-1
+         )
+      )
+   , ``)
 }
 
 function varPower(d: number) {
