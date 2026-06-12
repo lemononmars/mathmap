@@ -11,18 +11,26 @@
 	let currentQuestionIndex = $state(0);
 	let selectedOption = $state<number | null>(null);
 	let quizFinished = $state(false);
+	let showSolution = $state(false);
 
 	const currentQuestion = $derived(lesson.quiz[currentQuestionIndex]);
 
 	function submitAnswer() {
 		if (selectedOption === null) return;
 
-		if (currentQuestionIndex < lesson.quiz.length - 1) {
-			currentQuestionIndex++;
-			selectedOption = null;
+		if (!showSolution) {
+			showSolution = true;
 		} else {
-			quizFinished = true;
-			completeLesson(lesson.id, course.id);
+			if (currentQuestionIndex < lesson.quiz.length - 1) {
+				currentQuestionIndex++;
+				selectedOption = null;
+				showSolution = false;
+			} else {
+				quizFinished = true;
+				completeLesson(lesson.id);
+				if (course.id === 'calculus-1') unlockBadge('calc-novice');
+				if (course.id === 'precalculus') unlockBadge('precalc-pro');
+			}
 		}
 	}
 
@@ -59,7 +67,9 @@
 							<button
 								class="w-full text-left p-4 rounded-xl border-2 transition-all font-medium text-gray-700
 									{selectedOption === index ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'}
+									{showSolution ? 'opacity-70 cursor-default' : ''}
 								"
+								disabled={showSolution}
 								onclick={() => (selectedOption = index)}
 							>
 								{@html option}
@@ -68,6 +78,19 @@
 					</div>
 				</div>
 
+				{#if showSolution}
+					<div class="mt-6 p-4 rounded-xl bg-white border border-indigo-200 shadow-sm animate-in fade-in slide-in-from-top-2">
+						<div class="font-bold text-indigo-700 mb-2">Solution:</div>
+						<div class="prose prose-indigo max-w-none text-gray-700">
+							{#if currentQuestion.solution && currentQuestion.solution !== 'N/A'}
+								{@html currentQuestion.solution}
+							{:else}
+								<div class="italic text-gray-500">N/A</div>
+							{/if}
+						</div>
+					</div>
+				{/if}
+
 				<div class="mt-8">
 					<button
 						class="w-full py-4 rounded-2xl font-bold text-white text-lg transition-all shadow-md active:scale-[0.98]
@@ -75,7 +98,7 @@
 						disabled={selectedOption === null}
 						onclick={submitAnswer}
 					>
-						{currentQuestionIndex < lesson.quiz.length - 1 ? 'Next Question' : 'Finish Lesson'}
+						{!showSolution ? 'Check Answer' : currentQuestionIndex < lesson.quiz.length - 1 ? 'Next Question' : 'Finish Lesson'}
 					</button>
 				</div>
 			</div>

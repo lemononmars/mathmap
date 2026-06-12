@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { userState, initAuth, setGuestMode } from '$lib/state.svelte';
 	import { supabase } from '$lib/supabase';
-	import { Home, Trophy, Medal, Map, LogOut, LogIn } from '@lucide/svelte';
+	import { Home, Trophy, Medal, Map, FileText, LogOut, LogIn } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
@@ -96,6 +96,10 @@
 			<a href="/" class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-indigo-50 text-gray-500 hover:text-indigo-600">
 				<Home size={24} />
 				<span class="text-[10px] font-medium mt-1 uppercase tracking-wider">Courses</span>
+			</a>
+			<a href="/worksheets" class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-indigo-50 text-gray-500 hover:text-indigo-600">
+				<FileText size={24} />
+				<span class="text-[10px] font-medium mt-1 uppercase tracking-wider">Worksheets</span>
 			</a>
 			<a href="/leaderboard" class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-indigo-50 text-gray-500 hover:text-indigo-600">
 				<Trophy size={24} />
