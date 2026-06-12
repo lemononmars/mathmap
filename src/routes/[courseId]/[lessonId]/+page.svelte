@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { addPoints, completeLesson, unlockBadge } from '$lib/state.svelte';
+	import { completeLesson } from '$lib/state.svelte';
 	import { ArrowLeft, CheckCircle, XCircle, Trophy } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
