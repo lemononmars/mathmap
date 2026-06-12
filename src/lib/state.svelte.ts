@@ -67,24 +67,6 @@ export async function loadProgress() {
 	}
 }
 
-export async function syncProgress() {
-	if (userState.isGuest || !userState.user || !supabase) return;
-
-	const { error } = await supabase
-		.from('profiles')
-		.update({
-			points: userState.points,
-			badges: userState.badges,
-			completed_lessons: userState.completedLessons,
-			updated_at: new Date().toISOString()
-		})
-		.eq('user_id', userState.user.id);
-
-	if (error) {
-		console.error('Error syncing progress:', error);
-	}
-}
-
 export function setGuestMode() {
 	userState.isGuest = true;
 	userState.points = 0;
@@ -92,21 +74,31 @@ export function setGuestMode() {
 	userState.completedLessons = [];
 }
 
-export function addPoints(amount: number) {
-	userState.points += amount;
-	syncProgress();
-}
-
-export function unlockBadge(badgeId: string) {
-	if (!userState.badges.includes(badgeId)) {
-		userState.badges.push(badgeId);
-		syncProgress();
-	}
-}
-
-export function completeLesson(lessonId: string) {
+export async function completeLesson(lessonId: string, courseId: string) {
 	if (!userState.completedLessons.includes(lessonId)) {
+		// Optimistic update
 		userState.completedLessons.push(lessonId);
-		syncProgress();
+		userState.points += 10;
+
+		if (courseId === 'calculus-1' && !userState.badges.includes('calc-novice')) {
+			userState.badges.push('calc-novice');
+		}
+		if (courseId === 'precalculus' && !userState.badges.includes('precalc-pro')) {
+			userState.badges.push('precalc-pro');
+		}
+
+		if (userState.isGuest || !userState.user || !supabase) return;
+
+		// Server sync
+		const { error } = await supabase.rpc('complete_lesson', {
+			p_lesson_id: lessonId,
+			p_course_id: courseId
+		});
+
+		if (error) {
+			console.error('Error syncing lesson completion:', error);
+			// Optionally reload progress on error to revert optimistic update
+			await loadProgress();
+		}
 	}
 }
