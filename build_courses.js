@@ -146,9 +146,15 @@ function renderMath(text) {
     return text.trim();
 }
 
+let solutionsMap = {};
+if (fs.existsSync('src/lib/worksheet_solutions.json')) {
+    solutionsMap = JSON.parse(fs.readFileSync('src/lib/worksheet_solutions.json', 'utf-8'));
+}
+
 function parseWorksheet(filePath) {
     if (!fs.existsSync(filePath)) return [];
 
+    const wsId = path.basename(filePath).replace('.tex', '');
     const content = fs.readFileSync(filePath, 'utf-8');
     const enumMatch = content.match(/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/);
     if (!enumMatch) return [];
@@ -160,6 +166,8 @@ function parseWorksheet(filePath) {
     for (let i = 0; i < items.length; i += 2) {
         const topic = items[i];
         let questionContent = items[i+1].trim();
+        const qIdRaw = `q${i/2 + 1}`;
+        const solutionKey = `${wsId}_${qIdRaw}`;
 
         let options = [];
         const tasksMatch = questionContent.match(/\\begin\{tasks\}(?:\(.*?\))?([\s\S]*?)\\end\{tasks\}/);
@@ -174,9 +182,15 @@ function parseWorksheet(filePath) {
 
         questionContent = renderMath(questionContent);
 
+        let solutionContent = solutionsMap[solutionKey] || "N/A";
+        if (solutionContent !== "N/A") {
+            solutionContent = renderMath(solutionContent);
+        }
+
         questions.push({
-            id: `q${i/2 + 1}`,
+            id: qIdRaw,
             question: questionContent,
+            solution: solutionContent,
             options: options.length > 0 ? options : ["True", "False"],
             correctOptionIndex: 0,
             points: 10
@@ -186,6 +200,7 @@ function parseWorksheet(filePath) {
 }
 
 const courses = [];
+const worksheetsList = [];
 const lectureFiles = fs.readdirSync(LECTURES_DIR).filter(f => f.endsWith('.tex')).sort();
 
 for (const file of lectureFiles) {
@@ -223,6 +238,7 @@ for (const file of lectureFiles) {
                 {
                     id: "dummy",
                     question: "Did you understand this lesson?",
+                    solution: "N/A",
                     options: ["Yes", "No"],
                     correctOptionIndex: 0,
                     points: 10
@@ -239,15 +255,30 @@ for (const file of lectureFiles) {
         color: "bg-blue-500",
         lessons
     });
+
+    if (wsQuestions.length > 0) {
+        worksheetsList.push({
+            id: file.replace('lecture', 'worksheet').replace('.tex', ''),
+            title: `Worksheet for ${title}`,
+            questions: wsQuestions
+        });
+    }
 }
 
 const tsContent = `
 export type QuizQuestion = {
 	id: string;
 	question: string;
+	solution: string;
 	options: string[];
 	correctOptionIndex: number;
 	points: number;
+};
+
+export type Worksheet = {
+	id: string;
+	title: string;
+	questions: QuizQuestion[];
 };
 
 export type Lesson = {
@@ -267,6 +298,8 @@ export type Course = {
 };
 
 export const courses: Course[] = ${JSON.stringify(courses, null, 2)};
+
+export const worksheets: Worksheet[] = ${JSON.stringify(worksheetsList, null, 2)};
 `;
 
 fs.writeFileSync(OUTPUT_FILE, tsContent.trim());
