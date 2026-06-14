@@ -14,8 +14,10 @@
 		}
 	}
 
+	let completedLessonsSet = $derived(new Set(userState.completedLessons));
+
 	function getCourseProgress(course: typeof courses[0]) {
-		const completedInCourse = course.lessons.filter((l) => userState.completedLessons.includes(l.id)).length;
+		const completedInCourse = course.lessons.filter((l) => completedLessonsSet.has(l.id)).length;
 		return {
 			completed: completedInCourse,
 			total: course.lessons.length,
